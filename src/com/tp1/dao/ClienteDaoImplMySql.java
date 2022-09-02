@@ -11,7 +11,7 @@ import com.tp1.idao.DAOInterface;
 import com.tp1.idao.IClienteDao;
 import com.tp1.model.Cliente;
 
-public class ClienteDaoImplMySql implements DAOInterface {
+public class ClienteDaoImplMySql implements DAOInterface<Cliente> {
 	Conexion ctmp;
 	
 	public ClienteDaoImplMySql(Conexion conexion) {
@@ -41,7 +41,25 @@ public class ClienteDaoImplMySql implements DAOInterface {
 			e.printStackTrace();
 		}
 	}
-	
+	@Override
+	public boolean registrarObj (Cliente cliente) {
+		String insert = "INSERT INTO cliente (nombre, edad, id) VALUES(?, ?, ?)";
+		Boolean registrar = false;
+		try {
+			PreparedStatement ps = this.ctmp.getConnection().prepareStatement(insert);
+			ps.setString(1, cliente.getNombre());
+			ps.setInt(2, cliente.getEdad());
+			ps.setInt(3, cliente.getId());
+			ps.executeUpdate();
+			registrar = true;
+			ps.close();
+			this.ctmp.getConnection().commit();
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		return registrar;
+	}
 
 	@Override
 	public ArrayList<Cliente> obtenerTodos() {
@@ -64,7 +82,7 @@ public class ClienteDaoImplMySql implements DAOInterface {
 
 	@Override
 	public Cliente getById(int id) {
-		Cliente tmp = new Cliente();
+		Cliente tmp;
 		String sql = "SELECT * FROM cliente WHERE id ="+id;
 		try {
 			PreparedStatement ps = this.ctmp.getConnection().prepareStatement(sql);
@@ -82,7 +100,7 @@ public class ClienteDaoImplMySql implements DAOInterface {
 
 	@Override
 	public boolean actualizarObj(Cliente cliente) {
-		// intente hacer un update y tira error, y cuando logre que no tire error no lo actualizaba, me canse y lo solucione dropeando a la cliente y volviendola a agregar
+//		 intente hacer un update y tira error, y cuando logre que no tire error no lo actualizaba, me canse y lo solucione dropeando a la cliente y volviendola a agregar
 		if(eliminarCliente(cliente)&&registrar(cliente))
 			return true;
 		else
@@ -105,22 +123,4 @@ public class ClienteDaoImplMySql implements DAOInterface {
 		return eliminar;
 	}
 
-	public boolean registrar(Cliente p) {
-		String insert = "INSERT INTO cliente (nombre, edad, id) VALUES(?, ?, ?)";
-		Boolean registrar = false;
-		try {
-			PreparedStatement ps = this.ctmp.getConnection().prepareStatement(insert);
-			ps.setString(1, p.getNombre());
-			ps.setInt(2, p.getEdad());
-			ps.setInt(3, p.getId());
-			ps.executeUpdate();
-			registrar = true;
-			ps.close();
-			this.ctmp.getConnection().commit();
-		}
-		catch(SQLException e){
-			e.printStackTrace();
-		}
-		return registrar;
-	}
 }

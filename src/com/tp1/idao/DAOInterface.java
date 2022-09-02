@@ -11,8 +11,4 @@ public interface DAOInterface<T> {
     public Cliente getById(int id);
     public boolean actualizarObj( T obj);
     public boolean eliminarObj ( T obj);
-
-    boolean actualizarObj(Cliente cliente);
-
-    boolean eliminarObj(Cliente cliente);
 }
