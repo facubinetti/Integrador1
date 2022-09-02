@@ -1,1 +1,1 @@
-DAO en Java, conexion con base de datos MySQL
+Practico donde se dan a conocer nuestras habilidades con patrones de persistencia
