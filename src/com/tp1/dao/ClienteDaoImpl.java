@@ -8,13 +8,12 @@ import java.util.ArrayList;
 
 import com.tp1.connection.Conexion;
 import com.tp1.idao.DAOInterface;
-import com.tp1.idao.IClienteDao;
 import com.tp1.model.Cliente;
 
-public class ClienteDaoImplMySql implements DAOInterface<Cliente> {
+public class ClienteDaoImpl implements DAOInterface<Cliente> {
 	Conexion ctmp;
 	
-	public ClienteDaoImplMySql(Conexion conexion) {
+	public ClienteDaoImpl(Conexion conexion) {
 		this.ctmp = conexion;
 	}
 	
@@ -27,7 +26,6 @@ public class ClienteDaoImplMySql implements DAOInterface<Cliente> {
 					+ "PRIMARY KEY(id))";
 			this.ctmp.getConnection().prepareStatement(table).execute();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -43,13 +41,13 @@ public class ClienteDaoImplMySql implements DAOInterface<Cliente> {
 	}
 	@Override
 	public boolean registrarObj (Cliente cliente) {
-		String insert = "INSERT INTO cliente (nombre, edad, id) VALUES(?, ?, ?)";
+		String insert = "INSERT INTO cliente (id, nombre, email) VALUES(?, ?, ?)";
 		Boolean registrar = false;
 		try {
 			PreparedStatement ps = this.ctmp.getConnection().prepareStatement(insert);
-			ps.setString(1, cliente.getNombre());
-			ps.setInt(2, cliente.getEdad());
-			ps.setInt(3, cliente.getId());
+			ps.setInt(1, cliente.getId());
+			ps.setString(2, cliente.getNombre());
+			ps.setString(3, cliente.getEmail());
 			ps.executeUpdate();
 			registrar = true;
 			ps.close();
@@ -70,7 +68,7 @@ public class ClienteDaoImplMySql implements DAOInterface<Cliente> {
 			ps = this.ctmp.getConnection().prepareStatement(select);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				Cliente tmp = new Cliente(rs.getInt(1), rs.getString(2), rs.getInt(3));
+				Cliente tmp = new Cliente(rs.getInt(1), rs.getString(2), rs.getString(3));
 				listaClientes.add(tmp);
 			}
 		} catch (SQLException e) {
@@ -82,14 +80,15 @@ public class ClienteDaoImplMySql implements DAOInterface<Cliente> {
 
 	@Override
 	public Cliente getById(int id) {
-		Cliente tmp;
 		String sql = "SELECT * FROM cliente WHERE id ="+id;
+		Cliente tmp =null;
 		try {
 			PreparedStatement ps = this.ctmp.getConnection().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
-			tmp.setId(rs.getInt(1));
-			tmp.setNombre(rs.getString(2));
-			tmp.setEdad(rs.getInt(3));
+			tmp = new Cliente(rs.getInt(1), rs.getString(2), rs.getString(3));
+			//tmp.setId(rs.getInt(1));
+			//tmp.setNombre(rs.getString(2));
+			//tmp.setEmail(rs.getString(3));
 		}
 		catch (SQLException e) {
 			System.out.println("Error: Clase ClienteDaoImple, metodo obtener por id");
@@ -100,11 +99,20 @@ public class ClienteDaoImplMySql implements DAOInterface<Cliente> {
 
 	@Override
 	public boolean actualizarObj(Cliente cliente) {
-//		 intente hacer un update y tira error, y cuando logre que no tire error no lo actualizaba, me canse y lo solucione dropeando a la cliente y volviendola a agregar
-		if(eliminarCliente(cliente)&&registrar(cliente))
-			return true;
-		else
-			return false;
+		String update = "UPDATE cliente SET nombre=(?) , email=(?) WHERE id = (?)";
+		Boolean actualizar= false;
+		try {
+			PreparedStatement tmp = this.ctmp.getConnection().prepareStatement(update);
+			tmp.setInt(1,cliente.getId());
+			tmp.setString(2,cliente.getNombre());
+			tmp.setString(3,cliente.getEmail());
+			tmp.executeUpdate();
+			actualizar = true;
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return actualizar;
 	}
 
 	@Override

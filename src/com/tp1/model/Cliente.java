@@ -5,10 +5,10 @@ public class Cliente {
     private String nombre;
     private String email;
 
-    public Cliente(int id, String nombre, String email) {
+    public Cliente(int id, String nombre, String i) {
         this.id = id;
         this.nombre = nombre;
-        this.email = email;
+        this.email = i;
     }
 
     public int getId() {

@@ -8,7 +8,7 @@ public interface DAOInterface<T> {
 
     public boolean registrarObj ( T obj);
     public ArrayList<T> obtenerTodos();
-    public Cliente getById(int id);
+    public T getById(int id);
     public boolean actualizarObj( T obj);
     public boolean eliminarObj ( T obj);
 }
