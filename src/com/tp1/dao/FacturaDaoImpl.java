@@ -87,7 +87,9 @@ public class FacturaDaoImpl implements DAOInterface<Factura> {
 		try {
 			PreparedStatement ps = this.ctmp.getConnection().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
-			tmp = new Factura(rs.getInt(1), rs.getInt(2));
+			while(rs.next()) {
+				tmp = new Factura(rs.getInt(1), rs.getInt(2));
+			}
 		}
 		catch (SQLException e) {
 			System.out.println("Error: Clase ClienteDaoImple, metodo obtener por id");

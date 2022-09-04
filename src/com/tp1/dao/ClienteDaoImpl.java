@@ -81,11 +81,13 @@ public class ClienteDaoImpl implements DAOInterface<Cliente> {
 	@Override
 	public Cliente getById(int id) {
 		String sql = "SELECT * FROM cliente WHERE id ="+id;
-		Cliente tmp =null;
+		Cliente tmp = null;
 		try {
 			PreparedStatement ps = this.ctmp.getConnection().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
-			tmp = new Cliente(rs.getInt(1), rs.getString(2), rs.getString(3));
+			while(rs.next()){
+				tmp = new Cliente(rs.getInt(1), rs.getString(2), rs.getString(3));
+			}
 			//tmp.setId(rs.getInt(1));
 			//tmp.setNombre(rs.getString(2));
 			//tmp.setEmail(rs.getString(3));

@@ -1,5 +1,8 @@
 package com.tp1.dao;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.tp1.connection.Conexion;
@@ -33,9 +36,9 @@ public class ProductoDaoImpl implements DAOInterface<Producto>{
 		Boolean registrar = false;
 		try {
 			PreparedStatement ps = this.ctmp.getConnection().prepareStatement(insert);
-			ps.setInt(1, producto.getId());
-			ps.setString(2, producto.getNombre());
-			ps.setFloat(3, producto.getValor());
+			ps.setInt(1, obj.getId());
+			ps.setString(2, obj.getNombre());
+			ps.setFloat(3, obj.getValor());
 			ps.executeUpdate();
 			registrar = true;
 			ps.close();
@@ -74,7 +77,10 @@ public class ProductoDaoImpl implements DAOInterface<Producto>{
 			PreparedStatement ps = this.ctmp.getConnection().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 
-			tmp = new Producto(rs.getInt(1), rs.getString(2), rs.getFloat(3));
+			while(rs.next()) {
+				tmp = new Producto(rs.getInt(1), rs.getString(2), rs.getFloat(3));
+			}
+			
 
 			//tmp.setId(rs.getInt(1));
 			//tmp.setNombre(rs.getString(2));
@@ -96,9 +102,9 @@ public class ProductoDaoImpl implements DAOInterface<Producto>{
 		try {
 			PreparedStatement tmp = this.ctmp.getConnection().prepareStatement(update);
 
-			tmp.setInt(1,producto.getId());
-			tmp.setString(2,producto.getNombre());
-			tmp.setFloat(3,producto.getValor());
+			tmp.setInt(1,obj.getId());
+			tmp.setString(2,obj.getNombre());
+			tmp.setFloat(3,obj.getValor());
 
 			tmp.executeUpdate();
 			actualizar = true;
@@ -116,7 +122,7 @@ public class ProductoDaoImpl implements DAOInterface<Producto>{
 		try {
 			PreparedStatement tmp = this.ctmp.getConnection().prepareStatement(delete);
 
-			tmp.setInt(1,producto.getId());
+			tmp.setInt(1,obj.getId());
 
 			tmp.executeUpdate();
 			eliminar = true;
@@ -124,7 +130,7 @@ public class ProductoDaoImpl implements DAOInterface<Producto>{
 		catch(SQLException e) {
 			e.printStackTrace();
 		}
-		return false;
+		return eliminar;
 	}
 
 }
