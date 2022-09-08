@@ -7,6 +7,8 @@ public class Demo {
 	public static void main (String[] args) {
 
 		Controller cp = new Controller();
-		cp.leerProductos();
+//		cp.crearTablas();
+//		cp.leerProductos();
+		cp.listar("Producto");
 	}
 }

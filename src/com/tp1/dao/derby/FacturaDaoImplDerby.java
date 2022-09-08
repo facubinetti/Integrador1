@@ -1,29 +1,40 @@
-package com.tp1.dao;
+package com.tp1.dao.derby;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-
-import com.tp1.connection.Conexion;
 import com.tp1.idao.DAOInterface;
 import com.tp1.model.Factura;
 
-public class FacturaDaoImpl implements DAOInterface<Factura> {
+public class FacturaDaoImplDerby implements DAOInterface<Factura> {
+
 	Connection ctmp;
-	
 	//Constructor
-	public FacturaDaoImpl(Connection conexion) {
+	public FacturaDaoImplDerby(Connection conexion) {
 		this.ctmp = conexion;
 	}
-	
-	public void dropTable() throws SQLException{
+
+	@Override
+	public void crear() {
+		try {
+			String table = "CREATE TABLE factura("
+					+ "id INT NOT NULL , "
+					+ "idCliente int,"
+					+ "PRIMARY KEY(id))";
+			this.ctmp.prepareStatement(table).execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	public void dropTable() throws Exception{
 		String dropTable = "DROP TABLE factura";
 		try {
 			this.ctmp.prepareStatement(dropTable).execute();
 		}
-		catch(SQLException e) {
+		catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -38,7 +49,7 @@ public class FacturaDaoImpl implements DAOInterface<Factura> {
 			tmp.executeUpdate();
 			eliminar = true;
 		}
-		catch(SQLException e) {
+		catch(Exception e) {
 			e.printStackTrace();
 		}
 		return eliminar;
@@ -57,7 +68,7 @@ public class FacturaDaoImpl implements DAOInterface<Factura> {
 			ps.close();
 			this.ctmp.commit();
 		}
-		catch(SQLException e){
+		catch(Exception e){
 			e.printStackTrace();
 		}
 		return registrar;
@@ -75,7 +86,7 @@ public class FacturaDaoImpl implements DAOInterface<Factura> {
 				Factura tmp = new Factura(rs.getInt(1), rs.getInt(2));
 				listaFacturas.add(tmp);
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return listaFacturas;
@@ -92,7 +103,7 @@ public class FacturaDaoImpl implements DAOInterface<Factura> {
 				tmp = new Factura(rs.getInt(1), rs.getInt(2));
 			}
 		}
-		catch (SQLException e) {
+		catch (Exception e) {
 			System.out.println("Error: Clase ClienteDaoImple, metodo obtener por id");
 			e.printStackTrace();
 		}

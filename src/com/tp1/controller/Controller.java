@@ -31,11 +31,18 @@ public class Controller {
 
 	
 	public Controller() {
-		DAOFactory mysqlfactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL_JDBC);
+		DAOFactory mysqlfactory = DAOFactory.getDAOFactory(DAOFactory.DERBY_JDBC);
 		this.clienteDao = mysqlfactory.getClienteDAO();
 		this.facturaDao = mysqlfactory.getFacturaDAO();
 		this.facturaProductoDao = mysqlfactory.getFacturaProductoDAO();
 		this.productoDao = mysqlfactory.getProductoDAO();
+	}
+
+	public void crearTablas(){
+		this.clienteDao.crear();
+		this.productoDao.crear();
+		this.facturaDao.crear();
+		this.facturaProductoDao.crear();
 	}
 	
 	
@@ -109,18 +116,18 @@ public class Controller {
 	public void leerProductos() {
 		try {
 			@SuppressWarnings("deprecation")
-			CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader("csv/productos.csv"));
+			CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader("D:/Escritorio/Integrador 1/DAOMySQL/src/com/tp1/csv/productos.csv"));
 			for(CSVRecord row: parser) {
-			System.out.println(row.get("idProducto"));
-			System.out.println(row.get("nombre"));
-			System.out.println(row.get("valor"));
+//			System.out.println(row.get("idProducto"));
+//			System.out.println(row.get("nombre"));
+//			System.out.println(row.get("valor"));
 
 			int id = parseInt(row.get("idProducto"));
 			String nombre = row.get("nombre");
 			float valor = parseFloat(row.get("valor"));
 
 			Producto p = new Producto(id,nombre,valor);
-//			productoDao.registrarObj(p);
+			productoDao.registrarObj(p);
 
 			}
 		} catch (FileNotFoundException e) {
@@ -131,6 +138,8 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
+
+
 	
 	
 	

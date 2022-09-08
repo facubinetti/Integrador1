@@ -1,45 +1,42 @@
-package com.tp1.dao;
-
-
+package com.tp1.dao.derby;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-
-import com.tp1.connection.Conexion;
 import com.tp1.idao.DAOInterface;
 import com.tp1.model.Cliente;
 
-public class ClienteDaoImpl implements DAOInterface<Cliente> {
+
+public class ClienteDaoImplDerby implements DAOInterface<Cliente> {
 	Connection ctmp;
-	
-	public ClienteDaoImpl(Connection conexion) {
+
+	public ClienteDaoImplDerby(Connection conexion) {
 		this.ctmp = conexion;
 	}
-	
-	public void crear() throws SQLException{
+	@Override
+	public void crear(){
 		try {
-			String table = "CREATE TABLE IF NOT EXISTS cliente("
-					+ "id INT NULL AUTO_INCREMENT, " 
+			String table = "CREATE TABLE cliente("
+					+ "id INT NOT NULL , "
 					+ "nombre VARCHAR(500),"
 					+ "edad INT,"
 					+ "PRIMARY KEY(id))";
 			this.ctmp.prepareStatement(table).execute();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void dropTable() throws SQLException{
+	public void dropTable() throws Exception{
 		String dropTable = "DROP TABLE cliente";
 		try {
 			this.ctmp.prepareStatement(dropTable).execute();
 		}
-		catch(SQLException e) {
+		catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
 	@Override
 	public boolean registrarObj (Cliente cliente) {
 		String insert = "INSERT INTO cliente (id, nombre, email) VALUES(?, ?, ?)";
@@ -54,12 +51,12 @@ public class ClienteDaoImpl implements DAOInterface<Cliente> {
 			ps.close();
 			this.ctmp.commit();
 		}
-		catch(SQLException e){
+		catch(Exception e){
 			e.printStackTrace();
 		}
 		return registrar;
 	}
-
+	
 	@Override
 	public ArrayList<Cliente> obtenerTodos() {
 		ArrayList<Cliente> listaClientes = new ArrayList<>();
@@ -72,13 +69,13 @@ public class ClienteDaoImpl implements DAOInterface<Cliente> {
 				Cliente tmp = new Cliente(rs.getInt(1), rs.getString(2), rs.getString(3));
 				listaClientes.add(tmp);
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return listaClientes;
 	}
-
+	
 	@Override
 	public Cliente getById(int id) {
 		String sql = "SELECT * FROM cliente WHERE id ="+id;
@@ -93,7 +90,7 @@ public class ClienteDaoImpl implements DAOInterface<Cliente> {
 			//tmp.setNombre(rs.getString(2));
 			//tmp.setEmail(rs.getString(3));
 		}
-		catch (SQLException e) {
+		catch (Exception e) {
 			System.out.println("Error: Clase ClienteDaoImple, metodo obtener por id");
 			e.printStackTrace();
 		}
@@ -112,7 +109,7 @@ public class ClienteDaoImpl implements DAOInterface<Cliente> {
 			tmp.executeUpdate();
 			actualizar = true;
 		}
-		catch(SQLException e) {
+		catch(Exception e) {
 			e.printStackTrace();
 		}
 		return actualizar;
@@ -128,10 +125,12 @@ public class ClienteDaoImpl implements DAOInterface<Cliente> {
 			tmp.executeUpdate();
 			eliminar = true;
 		}
-		catch(SQLException e) {
+		catch(Exception e) {
 			e.printStackTrace();
 		}
 		return eliminar;
 	}
+	
+	
 
 }

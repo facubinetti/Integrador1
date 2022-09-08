@@ -1,32 +1,32 @@
-package com.tp1.dao;
+package com.tp1.dao.derby;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.tp1.connection.Conexion;
 import com.tp1.idao.DAOInterface;
 import com.tp1.model.Producto;
 
-public class ProductoDaoImpl implements DAOInterface<Producto>{
+public class ProductoDaoImplDerby implements DAOInterface<Producto> {
+	
 	Connection ctmp;
 	
 	//Constructor
-	public ProductoDaoImpl(Connection conexion) {
+	public ProductoDaoImplDerby(Connection conexion) {
 		this.ctmp = conexion;
 	}
-
-	public void crear() throws SQLException{
+	@Override
+	public void crear() {
 		try {
-			String table = "CREATE TABLE IF NOT EXISTS producto("
-					+ "id INT NULL AUTO_INCREMENT, "
+			String table = "CREATE TABLE producto("
+					+ "id INT NOT NULL , "
 					+ "nombre VARCHAR(45),"
 					+ "valor FLOAT,"
 					+ "PRIMARY KEY(id))";
 			this.ctmp.prepareStatement(table).execute();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -45,7 +45,7 @@ public class ProductoDaoImpl implements DAOInterface<Producto>{
 			ps.close();
 			this.ctmp.commit();
 		}
-		catch(SQLException e){
+		catch(Exception e){
 			e.printStackTrace();
 		}
 		return registrar;
@@ -63,7 +63,7 @@ public class ProductoDaoImpl implements DAOInterface<Producto>{
 				Producto tmp = new Producto(rs.getInt(1), rs.getString(2), rs.getFloat(3));
 				listaProductos.add(tmp);
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -87,7 +87,7 @@ public class ProductoDaoImpl implements DAOInterface<Producto>{
 			//tmp.setNombre(rs.getString(2));
 			//tmp.setValor(rs.getString(3));
 		}
-		catch (SQLException e) {
+		catch (Exception e) {
 			System.out.println("Error: Clase ProductoDaoImple, metodo obtener por id");
 			e.printStackTrace();
 		}
@@ -110,7 +110,7 @@ public class ProductoDaoImpl implements DAOInterface<Producto>{
 			tmp.executeUpdate();
 			actualizar = true;
 		}
-		catch(SQLException e) {
+		catch(Exception e) {
 			e.printStackTrace();
 		}
 		return actualizar;
@@ -128,7 +128,7 @@ public class ProductoDaoImpl implements DAOInterface<Producto>{
 			tmp.executeUpdate();
 			eliminar = true;
 		}
-		catch(SQLException e) {
+		catch(Exception e) {
 			e.printStackTrace();
 		}
 		return eliminar;

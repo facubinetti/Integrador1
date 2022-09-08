@@ -2,10 +2,11 @@ package com.tp1.factory;
 
 import com.tp1.connection.Conexion;
 import com.tp1.connection.ConexionMySql;
-import com.tp1.dao.ClienteDaoImpl;
-import com.tp1.dao.FacturaDaoImpl;
-import com.tp1.dao.FacturaProductoDaoImpl;
-import com.tp1.dao.ProductoDaoImpl;
+import com.tp1.dao.mysql.ClienteDaoImplMySql;
+import com.tp1.dao.mysql.FacturaDaoImplMySql;
+import com.tp1.dao.mysql.FacturaProductoDaoImplMySql;
+import com.tp1.dao.mysql.ProductoDaoImplMySql;
+
 
 public class MySqlDaoFactory extends DAOFactory {
 
@@ -13,27 +14,28 @@ public class MySqlDaoFactory extends DAOFactory {
 
 	
 	@Override
-	public ClienteDaoImpl getClienteDAO() {
+	public ClienteDaoImplMySql getClienteDAO() {
 		// TODO Auto-generated method stub
-		return new ClienteDaoImpl(conexion.getConnection());
+		return new ClienteDaoImplMySql(conexion.getConnection());
+
 	}
 	
 	@Override
-	public FacturaDaoImpl getFacturaDAO() {
+	public FacturaDaoImplMySql getFacturaDAO() {
 		// TODO Auto-generated method stub
-		return new FacturaDaoImpl(conexion.getConnection());
+		return new FacturaDaoImplMySql(conexion.getConnection());
 	}
 	
 	@Override
-	public ProductoDaoImpl getProductoDAO() {
+	public ProductoDaoImplMySql getProductoDAO() {
 		// TODO Auto-generated method stub
-		return new ProductoDaoImpl(conexion.getConnection());
+		return new ProductoDaoImplMySql(conexion.getConnection());
 	}
 	
 	@Override
-	public FacturaProductoDaoImpl getFacturaProductoDAO() {
+	public FacturaProductoDaoImplMySql getFacturaProductoDAO() {
 		// TODO Auto-generated method stub
-		return new FacturaProductoDaoImpl(conexion.getConnection());
+		return new FacturaProductoDaoImplMySql(conexion.getConnection());
 	}
 
 }

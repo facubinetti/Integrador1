@@ -35,4 +35,8 @@ public class Producto {
     public void setValor(float valor) {
         this.valor = valor;
     }
+
+    public String toString(){
+        return "ID : "+this.id +" , NOMBRE : "+this.nombre + " , VALOR: " + this.valor;
+    }
 }

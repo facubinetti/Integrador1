@@ -1,35 +1,33 @@
-package com.tp1.dao;
+package com.tp1.dao.derby;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.tp1.connection.Conexion;
 import com.tp1.idao.DAOInterface;
 import com.tp1.model.Factura_Producto;
 
+public class FacturaProductoDaoImplDerby implements DAOInterface<Factura_Producto> {
 
-
-public class FacturaProductoDaoImpl implements DAOInterface<Factura_Producto> {
 	Connection ctmp;
 	//Constructor
-	public FacturaProductoDaoImpl(Connection conexion) {
+	public FacturaProductoDaoImplDerby(Connection conexion) {
 		this.ctmp = conexion;
 	}
 	
-	public void crear() throws SQLException{
+	public void crear() {
 		try {
-			String table = "CREATE TABLE IF NOT EXISTS factura_producto("
+			String table = "CREATE TABLE factura_producto("
 					+ "idFactura INT,"
 					+ "idProducto INT,"
-					+ "cantidad INT)"
-					+ "ALTER TABLE `factura_producto`"
-					+ "ADD KEY `idFactura` (`idFactura`,`idProducto`),"
-					+ "ADD KEY `idProducto` (`idProducto`)";
+					+ "cantidad INT)";
+//					+ "ALTER TABLE `factura_producto`"
+//					+ "ADD KEY `idFactura` (`idFactura`,`idProducto`),"
+//					+ "ADD KEY `idProducto` (`idProducto`)";
 			this.ctmp.prepareStatement(table).execute();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -53,7 +51,7 @@ public class FacturaProductoDaoImpl implements DAOInterface<Factura_Producto> {
 			ps.close();
 			this.ctmp.commit();
 		}
-		catch(SQLException e){
+		catch(Exception e){
 			e.printStackTrace();
 		}
 		return registrar;
@@ -72,7 +70,7 @@ public class FacturaProductoDaoImpl implements DAOInterface<Factura_Producto> {
 				Factura_Producto tmp = new Factura_Producto(rs.getInt(1), rs.getInt(2), rs.getInt(3));
 				listaFacturas.add(tmp);
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return listaFacturas;
@@ -88,7 +86,7 @@ public class FacturaProductoDaoImpl implements DAOInterface<Factura_Producto> {
 			ResultSet rs = ps.executeQuery();
 			tmp = new Factura_Producto(rs.getInt(1), rs.getInt(2), rs.getInt(3));
 		}
-		catch (SQLException e) {
+		catch (Exception e) {
 			System.out.println("Error: Clase ClienteDaoImple, metodo obtener por id");
 			e.printStackTrace();
 		}
@@ -109,7 +107,7 @@ public class FacturaProductoDaoImpl implements DAOInterface<Factura_Producto> {
 			tmp.executeUpdate();
 			actualizar = true;
 		}
-		catch(SQLException e) {
+		catch(Exception e) {
 			e.printStackTrace();
 		}
 		return actualizar;
@@ -127,11 +125,10 @@ public class FacturaProductoDaoImpl implements DAOInterface<Factura_Producto> {
 			tmp.executeUpdate();
 			eliminar = true;
 		}
-		catch(SQLException e) {
+		catch(Exception e) {
 			e.printStackTrace();
 		}
 		return eliminar;
 
 	}
-
 }
