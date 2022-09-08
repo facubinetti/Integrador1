@@ -10,11 +10,11 @@ import com.tp1.dao.ProductoDaoImpl;
 public class DerbyDaoFactory extends DAOFactory {
 
 	ConexionDerby conexionDerby = new ConexionDerby();
-	
+
 	@Override
 	public ClienteDaoImpl getClienteDAO() {
 		// TODO Auto-generated method stub
-		return new ClienteDaoImpl(conexionDerby);
+		return new ClienteDaoImpl(null);
 	}
 
 	@Override

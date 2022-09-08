@@ -1,5 +1,6 @@
 package com.tp1.dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,9 +13,9 @@ import com.tp1.model.Factura_Producto;
 
 
 public class FacturaProductoDaoImpl implements DAOInterface<Factura_Producto> {
-	Conexion ctmp;
+	Connection ctmp;
 	//Constructor
-	public FacturaProductoDaoImpl(Conexion conexion) {
+	public FacturaProductoDaoImpl(Connection conexion) {
 		this.ctmp = conexion;
 	}
 	
@@ -27,7 +28,7 @@ public class FacturaProductoDaoImpl implements DAOInterface<Factura_Producto> {
 					+ "ALTER TABLE `factura_producto`"
 					+ "ADD KEY `idFactura` (`idFactura`,`idProducto`),"
 					+ "ADD KEY `idProducto` (`idProducto`)";
-			this.ctmp.getConnection().prepareStatement(table).execute();
+			this.ctmp.prepareStatement(table).execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -40,7 +41,7 @@ public class FacturaProductoDaoImpl implements DAOInterface<Factura_Producto> {
 		String insert = "INSERT INTO factura_producto (idFactura, idProducto, cantidad) VALUES(?, ?, ?)";
 		Boolean registrar = false;
 		try {
-			PreparedStatement ps = this.ctmp.getConnection().prepareStatement(insert);
+			PreparedStatement ps = this.ctmp.prepareStatement(insert);
 			
 			ps.setInt(1, obj.getIdFactura());
 			ps.setInt(2, obj.getIdProducto());
@@ -50,7 +51,7 @@ public class FacturaProductoDaoImpl implements DAOInterface<Factura_Producto> {
 			
 			registrar = true;
 			ps.close();
-			this.ctmp.getConnection().commit();
+			this.ctmp.commit();
 		}
 		catch(SQLException e){
 			e.printStackTrace();
@@ -65,7 +66,7 @@ public class FacturaProductoDaoImpl implements DAOInterface<Factura_Producto> {
 		String select = "SELECT * FROM factura_producto";
 		PreparedStatement ps;
 		try {
-			ps = this.ctmp.getConnection().prepareStatement(select);
+			ps = this.ctmp.prepareStatement(select);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Factura_Producto tmp = new Factura_Producto(rs.getInt(1), rs.getInt(2), rs.getInt(3));
@@ -83,7 +84,7 @@ public class FacturaProductoDaoImpl implements DAOInterface<Factura_Producto> {
 		String sql = "SELECT * FROM factura_producto WHERE id ="+id;
 		Factura_Producto tmp = null;
 		try {
-			PreparedStatement ps = this.ctmp.getConnection().prepareStatement(sql);
+			PreparedStatement ps = this.ctmp.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			tmp = new Factura_Producto(rs.getInt(1), rs.getInt(2), rs.getInt(3));
 		}
@@ -100,7 +101,7 @@ public class FacturaProductoDaoImpl implements DAOInterface<Factura_Producto> {
 		String update = "UPDATE factura_producto SET cantidad=(?) WHERE idFactura = (?) AND idProducto = (?)";
 		Boolean actualizar= false;
 		try {
-			PreparedStatement tmp = this.ctmp.getConnection().prepareStatement(update);
+			PreparedStatement tmp = this.ctmp.prepareStatement(update);
 			
 			tmp.setInt(1,obj.getCantidad());
 			tmp.setInt(2,obj.getIdFactura());
@@ -120,7 +121,7 @@ public class FacturaProductoDaoImpl implements DAOInterface<Factura_Producto> {
 		String delete = "DELETE FROM factura_producto WHERE idFactura = (?) AND idProducto = (?)";
 		Boolean eliminar = false;
 		try {
-			PreparedStatement tmp = this.ctmp.getConnection().prepareStatement(delete);
+			PreparedStatement tmp = this.ctmp.prepareStatement(delete);
 			tmp.setInt(1, obj.getIdFactura());
 			tmp.setInt(2, obj.getIdProducto());
 			tmp.executeUpdate();

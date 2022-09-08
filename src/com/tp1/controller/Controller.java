@@ -18,6 +18,9 @@ import com.tp1.model.Factura_Producto;
 import com.tp1.model.Producto;
 import com.tp1.vista.ViewCliente;
 
+import static java.lang.Float.parseFloat;
+import static java.lang.Integer.parseInt;
+
 public class Controller {
 
 	private ViewCliente vista = new ViewCliente();
@@ -39,11 +42,11 @@ public class Controller {
 	public boolean registrar(Object obj) {
 		if(obj instanceof Cliente) {
 			return clienteDao.registrarObj((Cliente) obj);
-		} else if (obj instanceof Factura) {
+		} if (obj instanceof Factura) {
 			return facturaDao.registrarObj((Factura) obj);
-		} else if (obj instanceof Factura_Producto) {
+		} if (obj instanceof Factura_Producto) {
 			return facturaProductoDao.registrarObj((Factura_Producto) obj);
-		} else if (obj instanceof Producto) {
+		} if (obj instanceof Producto) {
 			return productoDao.registrarObj((Producto) obj);
 		}
 		return false;
@@ -52,11 +55,11 @@ public class Controller {
 	public boolean actualizar(Object obj) {
 		if(obj instanceof Cliente) {
 			return clienteDao.actualizarObj((Cliente) obj);
-		} else if (obj instanceof Factura) {
+		} if (obj instanceof Factura) {
 			return facturaDao.actualizarObj((Factura) obj);
-		} else if (obj instanceof Factura_Producto) {
+		} if (obj instanceof Factura_Producto) {
 			return facturaProductoDao.actualizarObj((Factura_Producto) obj);
-		} else if (obj instanceof Producto) {
+		} if (obj instanceof Producto) {
 			return productoDao.actualizarObj((Producto) obj);
 		}
 		return false;
@@ -65,11 +68,11 @@ public class Controller {
 	public boolean eliminar(Object obj) {
 		if(obj instanceof Cliente) {
 			return clienteDao.eliminarObj((Cliente) obj);
-		} else if (obj instanceof Factura) {
+		} if (obj instanceof Factura) {
 			return facturaDao.eliminarObj((Factura) obj);
-		} else if (obj instanceof Factura_Producto) {
+		} if (obj instanceof Factura_Producto) {
 			return facturaProductoDao.eliminarObj((Factura_Producto) obj);
-		} else if (obj instanceof Producto) {
+		} if (obj instanceof Producto) {
 			return productoDao.eliminarObj((Producto) obj);
 		}
 		return false;
@@ -79,11 +82,11 @@ public class Controller {
 	public ArrayList<?> obtener(String obj) {
 		if(obj == "Cliente") {
 			return clienteDao.obtenerTodos();
-		} else if (obj == "Factura") {
+		} if (obj == "Factura") {
 			return facturaDao.obtenerTodos();
-		} else if (obj == "Factura_Producto") {
+		} if (obj == "Factura_Producto") {
 			return facturaProductoDao.obtenerTodos();
-		} else if (obj == "Producto") {
+		} if (obj == "Producto") {
 			return productoDao.obtenerTodos();
 		}
 		return null;
@@ -92,41 +95,42 @@ public class Controller {
 	public void listar(String obj){
 		if(obj == "Cliente") {
 			vista.listarClientes(clienteDao.obtenerTodos());
-		} else if (obj == "Factura") {
+		} if (obj == "Factura") {
 			vista.listarFacturas(facturaDao.obtenerTodos());
-		} else if (obj == "Factura_Producto") {
+		} if (obj == "Factura_Producto") {
 			vista.listarFacturaProductos(facturaProductoDao.obtenerTodos());
-		} else if (obj == "Producto") {
+		} if (obj == "Producto") {
 			vista.listarProductos(productoDao.obtenerTodos());
 		}
 		
 	}
 	
 
-//	public void leerProductos() {
-//		try {
-//			@SuppressWarnings("deprecation")
-//			CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader("productos.csv"));
-//			for(CSVRecord row: parser) {
-//			System.out.println(row.get("idProducto"));
-//			System.out.println(row.get("nombre"));
-//			System.out.println(row.get("valor"));
-//			
-//			int id = row.get("idProducto");
-//			String nombre = row.get("nombre");
-//			float valor = row.get("valor");
-//			
-//			Producto p = new Producto(id,nombre,valor);
-//			
-//			}
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
+	public void leerProductos() {
+		try {
+			@SuppressWarnings("deprecation")
+			CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader("csv/productos.csv"));
+			for(CSVRecord row: parser) {
+			System.out.println(row.get("idProducto"));
+			System.out.println(row.get("nombre"));
+			System.out.println(row.get("valor"));
+
+			int id = parseInt(row.get("idProducto"));
+			String nombre = row.get("nombre");
+			float valor = parseFloat(row.get("valor"));
+
+			Producto p = new Producto(id,nombre,valor);
+//			productoDao.registrarObj(p);
+
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	
 	

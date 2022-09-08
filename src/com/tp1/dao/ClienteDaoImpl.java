@@ -1,6 +1,7 @@
 package com.tp1.dao;
 
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,9 +12,9 @@ import com.tp1.idao.DAOInterface;
 import com.tp1.model.Cliente;
 
 public class ClienteDaoImpl implements DAOInterface<Cliente> {
-	Conexion ctmp;
+	Connection ctmp;
 	
-	public ClienteDaoImpl(Conexion conexion) {
+	public ClienteDaoImpl(Connection conexion) {
 		this.ctmp = conexion;
 	}
 	
@@ -24,7 +25,7 @@ public class ClienteDaoImpl implements DAOInterface<Cliente> {
 					+ "nombre VARCHAR(500),"
 					+ "edad INT,"
 					+ "PRIMARY KEY(id))";
-			this.ctmp.getConnection().prepareStatement(table).execute();
+			this.ctmp.prepareStatement(table).execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -33,7 +34,7 @@ public class ClienteDaoImpl implements DAOInterface<Cliente> {
 	public void dropTable() throws SQLException{
 		String dropTable = "DROP TABLE cliente";
 		try {
-			this.ctmp.getConnection().prepareStatement(dropTable).execute();
+			this.ctmp.prepareStatement(dropTable).execute();
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
@@ -44,14 +45,14 @@ public class ClienteDaoImpl implements DAOInterface<Cliente> {
 		String insert = "INSERT INTO cliente (id, nombre, email) VALUES(?, ?, ?)";
 		Boolean registrar = false;
 		try {
-			PreparedStatement ps = this.ctmp.getConnection().prepareStatement(insert);
+			PreparedStatement ps = this.ctmp.prepareStatement(insert);
 			ps.setInt(1, cliente.getId());
 			ps.setString(2, cliente.getNombre());
 			ps.setString(3, cliente.getEmail());
 			ps.executeUpdate();
 			registrar = true;
 			ps.close();
-			this.ctmp.getConnection().commit();
+			this.ctmp.commit();
 		}
 		catch(SQLException e){
 			e.printStackTrace();
@@ -65,7 +66,7 @@ public class ClienteDaoImpl implements DAOInterface<Cliente> {
 		String select = "SELECT * FROM cliente";
 		PreparedStatement ps;
 		try {
-			ps = this.ctmp.getConnection().prepareStatement(select);
+			ps = this.ctmp.prepareStatement(select);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Cliente tmp = new Cliente(rs.getInt(1), rs.getString(2), rs.getString(3));
@@ -83,7 +84,7 @@ public class ClienteDaoImpl implements DAOInterface<Cliente> {
 		String sql = "SELECT * FROM cliente WHERE id ="+id;
 		Cliente tmp = null;
 		try {
-			PreparedStatement ps = this.ctmp.getConnection().prepareStatement(sql);
+			PreparedStatement ps = this.ctmp.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
 				tmp = new Cliente(rs.getInt(1), rs.getString(2), rs.getString(3));
@@ -104,7 +105,7 @@ public class ClienteDaoImpl implements DAOInterface<Cliente> {
 		String update = "UPDATE cliente SET nombre=(?) , email=(?) WHERE id = (?)";
 		Boolean actualizar= false;
 		try {
-			PreparedStatement tmp = this.ctmp.getConnection().prepareStatement(update);
+			PreparedStatement tmp = this.ctmp.prepareStatement(update);
 			tmp.setInt(1,cliente.getId());
 			tmp.setString(2,cliente.getNombre());
 			tmp.setString(3,cliente.getEmail());
@@ -122,7 +123,7 @@ public class ClienteDaoImpl implements DAOInterface<Cliente> {
 		String delete = "DELETE FROM cliente WHERE id = ?";
 		Boolean eliminar = false;
 		try {
-			PreparedStatement tmp = this.ctmp.getConnection().prepareStatement(delete);
+			PreparedStatement tmp = this.ctmp.prepareStatement(delete);
 			tmp.setInt(1,cliente.getId());
 			tmp.executeUpdate();
 			eliminar = true;
