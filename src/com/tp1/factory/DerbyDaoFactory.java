@@ -1,10 +1,10 @@
 package com.tp1.factory;
 
 import com.tp1.connection.ConexionDerby;
-import com.tp1.dao.ClienteDaoImpl;
-import com.tp1.dao.FacturaDaoImpl;
-import com.tp1.dao.FacturaProductoDaoImpl;
-import com.tp1.dao.ProductoDaoImpl;
+import com.tp1.dao.ClienteDaoImplMySql;
+import com.tp1.dao.FacturaDaoImplMySql;
+import com.tp1.dao.FacturaProductoDaoImplMySql;
+import com.tp1.dao.ProductoDaoImplMySql;
 
 
 public class DerbyDaoFactory extends DAOFactory {
@@ -12,25 +12,25 @@ public class DerbyDaoFactory extends DAOFactory {
 	ConexionDerby conexionDerby = new ConexionDerby();
 	
 	@Override
-	public ClienteDaoImpl getClienteDAO() {
+	public ClienteDaoImplMySql getClienteDAO() {
 		// TODO Auto-generated method stub
-		return new ClienteDaoImpl(conexionDerby);
+		return new ClienteDaoImplMySql(conexionDerby);
 	}
 
 	@Override
-	public FacturaDaoImpl getFacturaDAO() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ProductoDaoImpl getProductoDAO() {
+	public FacturaDaoImplMySql getFacturaDAO() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public FacturaProductoDaoImpl getFacturaProductoDAO() {
+	public ProductoDaoImplMySql getProductoDAO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public FacturaProductoDaoImplMySql getFacturaProductoDAO() {
 		// TODO Auto-generated method stub
 		return null;
 	}

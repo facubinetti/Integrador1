@@ -9,18 +9,19 @@ import com.tp1.connection.Conexion;
 import com.tp1.idao.DAOInterface;
 import com.tp1.model.Factura;
 
-public class FacturaDaoImpl implements DAOInterface<Factura> {
-	Conexion ctmp;
+public class FacturaDaoImplDerby implements DAOInterface<Factura> {
+
+Connection ctmp;
 	
 	//Constructor
-	public FacturaDaoImpl(Conexion conexion) {
+	public FacturaDaoImpl(Connection conexion) {
 		this.ctmp = conexion;
 	}
 	
 	public void dropTable() throws SQLException{
 		String dropTable = "DROP TABLE factura";
 		try {
-			this.ctmp.getConnection().prepareStatement(dropTable).execute();
+			this.ctmp.prepareStatement(dropTable).execute();
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
@@ -32,7 +33,7 @@ public class FacturaDaoImpl implements DAOInterface<Factura> {
 		String delete = "DELETE FROM factura WHERE id = ?";
 		Boolean eliminar = false;
 		try {
-			PreparedStatement tmp = this.ctmp.getConnection().prepareStatement(delete);
+			PreparedStatement tmp = this.ctmp.prepareStatement(delete);
 			tmp.setInt(1,factura.getId());
 			tmp.executeUpdate();
 			eliminar = true;
@@ -48,7 +49,7 @@ public class FacturaDaoImpl implements DAOInterface<Factura> {
 		String insert = "INSERT INTO factura (id, idCliente) VALUES(?, ?)";
 		Boolean registrar = false;
 		try {
-			PreparedStatement ps = this.ctmp.getConnection().prepareStatement(insert);
+			PreparedStatement ps = this.ctmp.prepareStatement(insert);
 			ps.setInt(1, factura.getId());
 			ps.setInt(2, factura.getIdClient());
 			ps.executeUpdate();
@@ -68,7 +69,7 @@ public class FacturaDaoImpl implements DAOInterface<Factura> {
 		String select = "SELECT * FROM factura";
 		PreparedStatement ps;
 		try {
-			ps = this.ctmp.getConnection().prepareStatement(select);
+			ps = this.ctmp.prepareStatement(select);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Factura tmp = new Factura(rs.getInt(1), rs.getInt(2));
@@ -85,7 +86,7 @@ public class FacturaDaoImpl implements DAOInterface<Factura> {
 		String sql = "SELECT * FROM factura WHERE id ="+id;
 		Factura tmp =null;
 		try {
-			PreparedStatement ps = this.ctmp.getConnection().prepareStatement(sql);
+			PreparedStatement ps = this.ctmp.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				tmp = new Factura(rs.getInt(1), rs.getInt(2));

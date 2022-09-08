@@ -9,22 +9,23 @@ import com.tp1.connection.Conexion;
 import com.tp1.idao.DAOInterface;
 import com.tp1.model.Producto;
 
-public class ProductoDaoImpl implements DAOInterface<Producto>{
-	Conexion ctmp;
+public class ProductoDaoImplDerby implements DAOInterface<Producto> {
+	
+	Connection ctmp;
 	
 	//Constructor
-	public ProductoDaoImpl(Conexion conexion) {
+	public ProductoDaoImplDerby(Connection conexion) {
 		this.ctmp = conexion;
 	}
 
 	public void crear() throws SQLException{
 		try {
-			String table = "CREATE TABLE IF NOT EXISTS producto("
+			String table = "CREATE TABLE producto("
 					+ "id INT NULL AUTO_INCREMENT, "
 					+ "nombre VARCHAR(45),"
 					+ "valor FLOAT,"
 					+ "PRIMARY KEY(id))";
-			this.ctmp.getConnection().prepareStatement(table).execute();
+			this.ctmp.prepareStatement(table).execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -35,14 +36,14 @@ public class ProductoDaoImpl implements DAOInterface<Producto>{
 		String insert = "INSERT INTO producto (id, nombre, valor) VALUES(?, ?, ?)";
 		Boolean registrar = false;
 		try {
-			PreparedStatement ps = this.ctmp.getConnection().prepareStatement(insert);
+			PreparedStatement ps = this.ctmp.prepareStatement(insert);
 			ps.setInt(1, obj.getId());
 			ps.setString(2, obj.getNombre());
 			ps.setFloat(3, obj.getValor());
 			ps.executeUpdate();
 			registrar = true;
 			ps.close();
-			this.ctmp.getConnection().commit();
+			this.ctmp.commit();
 		}
 		catch(SQLException e){
 			e.printStackTrace();
@@ -56,7 +57,7 @@ public class ProductoDaoImpl implements DAOInterface<Producto>{
 		String select = "SELECT * FROM producto";
 		PreparedStatement ps;
 		try {
-			ps = this.ctmp.getConnection().prepareStatement(select);
+			ps = this.ctmp.prepareStatement(select);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Producto tmp = new Producto(rs.getInt(1), rs.getString(2), rs.getFloat(3));
@@ -74,7 +75,7 @@ public class ProductoDaoImpl implements DAOInterface<Producto>{
 		String sql = "SELECT * FROM producto WHERE id = ?";
 		Producto tmp = null;
 		try {
-			PreparedStatement ps = this.ctmp.getConnection().prepareStatement(sql);
+			PreparedStatement ps = this.ctmp.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 
 			while(rs.next()) {
@@ -100,7 +101,7 @@ public class ProductoDaoImpl implements DAOInterface<Producto>{
 
 		Boolean actualizar= false;
 		try {
-			PreparedStatement tmp = this.ctmp.getConnection().prepareStatement(update);
+			PreparedStatement tmp = this.ctmp.prepareStatement(update);
 
 			tmp.setInt(1,obj.getId());
 			tmp.setString(2,obj.getNombre());
@@ -120,7 +121,7 @@ public class ProductoDaoImpl implements DAOInterface<Producto>{
 		String delete = "DELETE FROM producto WHERE id = ?";
 		Boolean eliminar = false;
 		try {
-			PreparedStatement tmp = this.ctmp.getConnection().prepareStatement(delete);
+			PreparedStatement tmp = this.ctmp.prepareStatement(delete);
 
 			tmp.setInt(1,obj.getId());
 
