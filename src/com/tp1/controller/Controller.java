@@ -116,7 +116,7 @@ public class Controller {
 	public void leerProductos() {
 		try {
 			@SuppressWarnings("deprecation")
-			CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader("D:/Escritorio/Integrador 1/DAOMySQL/src/com/tp1/csv/productos.csv"));
+			CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader("./src/com/tp1/csv/productos.csv"));
 			for(CSVRecord row: parser) {
 //			System.out.println(row.get("idProducto"));
 //			System.out.println(row.get("nombre"));
