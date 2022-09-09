@@ -9,6 +9,10 @@ public class Demo {
 		Controller cp = new Controller();
 //		cp.crearTablas();
 //		cp.leerProductos();
-		cp.listar("Producto");
+//		cp.listar("Producto");
+//		cp.leerClientes();
+//      cp.listar("Cliente");
+//		cp.leerFacturas();
+		cp.listar("Factura");
 	}
 }

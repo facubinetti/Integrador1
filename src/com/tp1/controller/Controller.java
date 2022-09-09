@@ -31,7 +31,7 @@ public class Controller {
 
 	
 	public Controller() {
-		DAOFactory mysqlfactory = DAOFactory.getDAOFactory(DAOFactory.DERBY_JDBC);
+		DAOFactory mysqlfactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL_JDBC);
 		this.clienteDao = mysqlfactory.getClienteDAO();
 		this.facturaDao = mysqlfactory.getFacturaDAO();
 		this.facturaProductoDao = mysqlfactory.getFacturaProductoDAO();
@@ -127,7 +127,58 @@ public class Controller {
 			float valor = parseFloat(row.get("valor"));
 
 			Producto p = new Producto(id,nombre,valor);
-			productoDao.registrarObj(p);
+			registrar(p);
+
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void leerClientes() {
+		try {
+			@SuppressWarnings("deprecation")
+			CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader("./src/com/tp1/csv/clientes.csv"));
+			for(CSVRecord row: parser) {
+//			System.out.println(row.get("idProducto"));
+//			System.out.println(row.get("nombre"));
+//			System.out.println(row.get("valor"));
+
+			int id = parseInt(row.get("idCliente"));
+			String nombre = row.get("nombre");
+			String email = row.get("email");
+
+			Cliente p = new Cliente(id,nombre,email);
+			registrar(p);
+
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void leerFacturas() {
+		try {
+			@SuppressWarnings("deprecation")
+			CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader("./src/com/tp1/csv/facturas.csv"));
+			for(CSVRecord row: parser) {
+//			System.out.println(row.get("idProducto"));
+//			System.out.println(row.get("nombre"));
+//			System.out.println(row.get("valor"));
+
+			int idFactura = parseInt(row.get("idFactura"));
+			int idCliente = parseInt(row.get("idCliente"));
+
+			Factura p = new Factura(idFactura,idCliente);
+			registrar(p);
 
 			}
 		} catch (FileNotFoundException e) {

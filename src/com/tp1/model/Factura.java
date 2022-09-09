@@ -24,4 +24,8 @@ public class Factura {
     public void setIdClient(int idClient) {
         this.idClient = idClient;
     }
+    
+    public String toString() {
+    	return "IDFactura: "+this.id+", IdCliente: "+this.idClient;
+    }
 }

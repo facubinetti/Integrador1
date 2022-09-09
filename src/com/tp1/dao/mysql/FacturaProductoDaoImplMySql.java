@@ -22,12 +22,12 @@ public class FacturaProductoDaoImplMySql implements DAOInterface<Factura_Product
 	public void crear() {
 		try {
 			String table = "CREATE TABLE IF NOT EXISTS factura_producto("
-					+ "idFactura INT,"
-					+ "idProducto INT,"
-					+ "cantidad INT)"
-					+ "ALTER TABLE `factura_producto`"
-					+ "ADD KEY `idFactura` (`idFactura`,`idProducto`),"
-					+ "ADD KEY `idProducto` (`idProducto`)";
+					+ "idFactura INT, "
+					+ "idProducto INT, "
+					+ "cantidad INT) ";
+//					+ "ALTER TABLE `factura_producto` "
+//					+ "ADD KEY `idFactura` (`idFactura`,`idProducto`) ,"
+//					+ "ADD KEY `idProducto` (`idProducto`) ";
 			this.ctmp.prepareStatement(table).execute();
 		} catch (SQLException e) {
 			e.printStackTrace();

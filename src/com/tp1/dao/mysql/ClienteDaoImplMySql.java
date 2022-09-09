@@ -23,7 +23,7 @@ public class ClienteDaoImplMySql implements DAOInterface<Cliente> {
 			String table = "CREATE TABLE IF NOT EXISTS cliente("
 					+ "id INT NOT NULL AUTO_INCREMENT, "
 					+ "nombre VARCHAR(500),"
-					+ "edad INT,"
+					+ "email VARCHAR(200),"
 					+ "PRIMARY KEY(id))";
 			this.ctmp.prepareStatement(table).execute();
 		} catch (SQLException e) {
