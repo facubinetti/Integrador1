@@ -21,6 +21,9 @@ import com.tp1.vista.ViewCliente;
 import static java.lang.Float.parseFloat;
 import static java.lang.Integer.parseInt;
 
+/**
+ * @author Grupo 1 - Aldaya Benjamin - Binetti Facundo - Carrera Tomas - Fernandez Manuela - Rust Matias
+ */
 public class Controller {
 
 	private ViewCliente vista = new ViewCliente();
@@ -33,7 +36,9 @@ public class Controller {
 	public static final int DERBY_JDBC = 2;
 
 
-	
+	/**
+	 * @param whichFactory Selector base de datos 1 MYSQL 2 Derby
+	 */
 	public Controller(int whichFactory) {
 		DAOFactory factory = DAOFactory.getDAOFactory(whichFactory);
 		this.clienteDao = factory.getClienteDAO();
@@ -41,22 +46,31 @@ public class Controller {
 		this.facturaProductoDao = factory.getFacturaProductoDAO();
 		this.productoDao = factory.getProductoDAO();
 	}
-
+	/**
+	 * Genera todas las tablas en la base de datos
+	 */
 	public void crearTablas(){
 			this.clienteDao.crear();
 			this.productoDao.crear();
 			this.facturaDao.crear();
 			this.facturaProductoDao.crear();
 	}
-	
+
+	/**
+	 * Elimina todas las tablas de la base de datos
+	 */
 	public void eliminarTablas() {
 		clienteDao.dropTable();
 		productoDao.dropTable();
 		facturaDao.dropTable();
 		facturaProductoDao.dropTable();
 	}
-	
-	
+
+	/**
+	 * Registra la instancia en la base de datos
+	 * @param obj Recibe una instancia de algun modelo
+	 * @return Confirma si registro la instancia
+	 */
 	public boolean registrar(Object obj) {
 		if(obj instanceof Cliente) {
 			return clienteDao.registrarObj((Cliente) obj);
@@ -70,7 +84,12 @@ public class Controller {
 		return false;
 		
 	}
-	
+
+	/**
+	 * Actualiza la instancia recibida en la base de datos
+	 * @param obj Instancia del modelo
+	 * @return Confirma la actualizacion en la base de datos
+	 */
 	public boolean actualizar(Object obj) {
 		if(obj instanceof Cliente) {
 			return clienteDao.actualizarObj((Cliente) obj);
@@ -83,7 +102,12 @@ public class Controller {
 		}
 		return false;
 	}
-	
+
+	/**
+	 * Elimina la instancia recibida de la base datos
+	 * @param obj Instancia del modelo
+	 * @return Confirma la eliminacion de la instancia en la base de datos
+	 */
 	public boolean eliminar(Object obj) {
 		if(obj instanceof Cliente) {
 			return clienteDao.eliminarObj((Cliente) obj);
@@ -110,7 +134,11 @@ public class Controller {
 		}
 		return null;
 	}
-	
+
+	/**
+	 * Muestra/Lista todos los registros de la tabla
+	 * @param obj Nombre de la tabla a mostrar
+	 */
 	public void listar(String obj){
 		if(obj == "Cliente") {
 			vista.listarClientes(clienteDao.obtenerTodos());
@@ -123,13 +151,20 @@ public class Controller {
 		}
 		
 	}
-	
+
+	/**
+	 * Lee los archivos csv
+	 */
 	public void leerArchivos() {
 		leerProductos();
 		leerClientes();
 		leerFacturas();
 	}
 
+	/**
+	 * Lee productos.csv y lo registra en la base de datos
+	 * @see Controller#registrar(Object)
+	 */
 	private void leerProductos() {
 		try {
 			@SuppressWarnings("deprecation")
@@ -157,7 +192,10 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
-	
+
+	/**
+	 * Lee clientes.csv y lo registra en la base de datos
+	 */
 	private void leerClientes() {
 		try {
 			@SuppressWarnings("deprecation")
@@ -185,7 +223,10 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
-	
+
+	/**
+	 * Lee facturas.csv y lo registra en la base de datos
+	 */
 	private void leerFacturas() {
 		try {
 			@SuppressWarnings("deprecation")
