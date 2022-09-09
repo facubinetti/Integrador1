@@ -44,6 +44,12 @@ public class ClienteDaoImplMySql implements DAOInterface<Cliente> {
 		}
 		return drop;
 	}
+
+	@Override
+	public boolean crearRelacion() {
+		return false;
+	}
+
 	@Override
 	public boolean registrarObj (Cliente cliente) {
 		String insert = "INSERT INTO cliente (id, nombre, email) VALUES(?, ?, ?)";

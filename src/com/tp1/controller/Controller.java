@@ -47,13 +47,24 @@ public class Controller {
 		this.productoDao = factory.getProductoDAO();
 	}
 	/**
-	 * Genera todas las tablas en la base de datos
+	 * Genera todas las tablas y relaciones en la base de datos
 	 */
 	public void crearTablas(){
 			this.clienteDao.crear();
 			this.productoDao.crear();
 			this.facturaDao.crear();
 			this.facturaProductoDao.crear();
+			this.crearRelaciones();
+	}
+
+	/**
+	 * Crea las Relaciones entre tablas en la base de datos
+	 */
+	private void crearRelaciones(){
+		this.clienteDao.crearRelacion();
+		this.facturaDao.crearRelacion();
+		this.facturaDao.crearRelacion();
+		this.facturaProductoDao.crearRelacion();
 	}
 
 	/**

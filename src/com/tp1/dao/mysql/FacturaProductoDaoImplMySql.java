@@ -30,13 +30,12 @@ public class FacturaProductoDaoImplMySql implements DAOInterface<Factura_Product
 //					+ "ADD KEY `idFactura` (`idFactura`,`idProducto`) ,"
 //					+ "ADD KEY `idProducto` (`idProducto`) ";
 			this.ctmp.prepareStatement(table).execute();
-			this.modificar();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-
-	public void modificar() {
+	@Override
+	public boolean crearRelacion() {
 		try {
 			String alter = "ALTER TABLE factura_producto "
 					+ "ADD CONSTRAINT FK_factura_producto_factura "
@@ -46,12 +45,13 @@ public class FacturaProductoDaoImplMySql implements DAOInterface<Factura_Product
 					+ "ADD CONSTRAINT FK_factura_producto_producto "
 					+ "FOREIGN KEY (idProducto) "
 					+ "REFERENCES producto (id) ";
-
 			this.ctmp.prepareStatement(alter).execute();
 			this.ctmp.prepareStatement(alter2).execute();
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 

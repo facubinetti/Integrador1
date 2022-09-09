@@ -149,4 +149,9 @@ public class ProductoDaoImplMySql implements DAOInterface<Producto>{
 		return drop;
 	}
 
+	@Override
+	public boolean crearRelacion() {
+		return false;
+	}
+
 }

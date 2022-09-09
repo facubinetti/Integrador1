@@ -14,5 +14,6 @@ public interface DAOInterface<T> {
     public boolean actualizarObj( T obj);
     public boolean eliminarObj ( T obj);
     public boolean dropTable();
-    
+
+    public boolean crearRelacion();
 }

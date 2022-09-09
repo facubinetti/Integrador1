@@ -24,13 +24,12 @@ public class FacturaDaoImplDerby implements DAOInterface<Factura> {
 					+ "idCliente int,"
 					+ "PRIMARY KEY(id))";
 			this.ctmp.prepareStatement(table).execute();
-			this.modificar();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void modificar() {
+	public boolean crearRelacion() {
 		try {
 			String alter = "ALTER TABLE factura "
 					+ "ADD CONSTRAINT FK_factura_cliente "
@@ -40,9 +39,11 @@ public class FacturaDaoImplDerby implements DAOInterface<Factura> {
 					+ "INITIALLY IMMEDIATE";
 
 			this.ctmp.prepareStatement(alter).execute();
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 

@@ -27,23 +27,24 @@ public class FacturaDaoImplMySql implements DAOInterface<Factura> {
 					+ "idCliente int,"
 					+ "PRIMARY KEY(id))";
 			this.ctmp.prepareStatement(table).execute();
-			this.modificar();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void modificar() {
+
+	@Override
+	public boolean crearRelacion() {
 		try {
 			String alter = "ALTER TABLE factura "
 					+ "ADD CONSTRAINT FK_factura_cliente "
 					+ "FOREIGN KEY (idCliente) "
 					+ "REFERENCES cliente (id) ";
-
 			this.ctmp.prepareStatement(alter).execute();
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 	public boolean dropTable(){
