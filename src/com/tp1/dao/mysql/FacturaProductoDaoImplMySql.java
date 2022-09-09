@@ -134,4 +134,19 @@ public class FacturaProductoDaoImplMySql implements DAOInterface<Factura_Product
 
 	}
 
+	
+	@Override
+	public boolean dropTable(){
+		String dropTable = "DROP TABLE factura_producto";
+		boolean drop = false;
+		try {
+			this.ctmp.prepareStatement(dropTable).execute();
+			drop = true;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return drop;
+	}
+
 }

@@ -6,13 +6,18 @@ import com.tp1.controller.Controller;
 public class Demo {
 	public static void main (String[] args) {
 
-		Controller cp = new Controller();
-//		cp.crearTablas();
-//		cp.leerProductos();
+		Controller cp = new Controller(Controller.MYSQL_JDBC);
+		
+		cp.crearTablas();
+		
+		cp.leerArchivos();
+		
 //		cp.listar("Producto");
-//		cp.leerClientes();
-//      cp.listar("Cliente");
-//		cp.leerFacturas();
-		cp.listar("Factura");
+
+		cp.listar("Cliente");
+
+//		cp.listar("Factura");
+		
+//		cp.eliminarTablas();
 	}
 }

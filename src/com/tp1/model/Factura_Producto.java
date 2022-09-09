@@ -36,4 +36,8 @@ public class Factura_Producto {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
+    
+    public String toString() {
+    	return "IDFactura: "+this.idFactura+" , IDProducto: "+this.idProducto+" , cantidad: "+this.cantidad;
+    }
 }

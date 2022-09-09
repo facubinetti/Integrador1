@@ -2,6 +2,7 @@ package com.tp1.dao.derby;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import com.tp1.idao.DAOInterface;
 import com.tp1.model.Cliente;
@@ -27,14 +28,17 @@ public class ClienteDaoImplDerby implements DAOInterface<Cliente> {
 		}
 	}
 	
-	public void dropTable() throws Exception{
+	public boolean dropTable(){
 		String dropTable = "DROP TABLE cliente";
+		boolean drop = false;
 		try {
 			this.ctmp.prepareStatement(dropTable).execute();
+			drop = true;
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		return drop;
 	}
 	
 	@Override
@@ -130,6 +134,7 @@ public class ClienteDaoImplDerby implements DAOInterface<Cliente> {
 		}
 		return eliminar;
 	}
+
 	
 	
 

@@ -31,14 +31,17 @@ public class ClienteDaoImplMySql implements DAOInterface<Cliente> {
 		}
 	}
 	
-	public void dropTable() throws SQLException{
+	public boolean dropTable(){
 		String dropTable = "DROP TABLE cliente";
+		Boolean drop = false;
 		try {
 			this.ctmp.prepareStatement(dropTable).execute();
+			drop = true;
 		}
-		catch(SQLException e) {
+		catch(Exception e) {
 			e.printStackTrace();
 		}
+		return drop;
 	}
 	@Override
 	public boolean registrarObj (Cliente cliente) {
@@ -133,5 +136,8 @@ public class ClienteDaoImplMySql implements DAOInterface<Cliente> {
 		}
 		return eliminar;
 	}
+	
+	
+
 
 }

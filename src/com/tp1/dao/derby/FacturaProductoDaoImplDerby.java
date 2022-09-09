@@ -3,6 +3,7 @@ package com.tp1.dao.derby;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.tp1.connection.Conexion;
@@ -130,5 +131,20 @@ public class FacturaProductoDaoImplDerby implements DAOInterface<Factura_Product
 		}
 		return eliminar;
 
+	}
+
+
+	
+	public boolean dropTable(){
+		String dropTable = "DROP TABLE factura_producto";
+		boolean drop = false;
+		try {
+			this.ctmp.prepareStatement(dropTable).execute();
+			drop = true;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return drop;
 	}
 }

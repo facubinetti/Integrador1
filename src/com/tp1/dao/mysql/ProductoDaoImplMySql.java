@@ -134,4 +134,18 @@ public class ProductoDaoImplMySql implements DAOInterface<Producto>{
 		return eliminar;
 	}
 
+	@Override
+	public boolean dropTable(){
+		String dropTable = "DROP TABLE producto";
+		boolean drop = false;
+		try {
+			this.ctmp.prepareStatement(dropTable).execute();
+			drop = true;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return drop;
+	}
+
 }

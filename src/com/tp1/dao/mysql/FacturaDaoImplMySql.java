@@ -31,20 +31,23 @@ public class FacturaDaoImplMySql implements DAOInterface<Factura> {
 		}
 	}
 
-	public void dropTable() throws SQLException{
+	public boolean dropTable(){
 		String dropTable = "DROP TABLE factura";
+		boolean drop = false;
 		try {
 			this.ctmp.prepareStatement(dropTable).execute();
+			drop = true;
 		}
-		catch(SQLException e) {
+		catch(Exception e) {
 			e.printStackTrace();
 		}
+		return drop;
 	}
 	
 	@Override
 	public boolean eliminarObj(Factura factura) {
 		String delete = "DELETE FROM factura WHERE id = ?";
-		Boolean eliminar = false;
+		boolean eliminar = false;
 		try {
 			PreparedStatement tmp = this.ctmp.prepareStatement(delete);
 			tmp.setInt(1,factura.getId());
@@ -117,4 +120,5 @@ public class FacturaDaoImplMySql implements DAOInterface<Factura> {
 		
 		return false;
 	}
+
 }
