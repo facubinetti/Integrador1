@@ -20,7 +20,8 @@ public class ProductoDaoImplMySql implements DAOInterface<Producto>{
 @Override
 	public void crear(){
 		try {
-			String table = "CREATE TABLE IF NOT EXISTS producto("
+			String table = "CREATE DATABASE IF NOT EXISTS gp1tpi1,"
+					+ "CREATE TABLE IF NOT EXISTS producto("
 					+ "id INT NOT NULL AUTO_INCREMENT, "
 					+ "nombre VARCHAR(45),"
 					+ "valor FLOAT,"

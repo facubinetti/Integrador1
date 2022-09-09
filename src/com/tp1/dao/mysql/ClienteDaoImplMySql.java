@@ -20,7 +20,8 @@ public class ClienteDaoImplMySql implements DAOInterface<Cliente> {
 	@Override
 	public void crear() {
 		try {
-			String table = "CREATE TABLE IF NOT EXISTS cliente("
+			String table = "CREATE DATABASE IF NOT EXISTS gp1tpi1,"
+					+ "CREATE TABLE IF NOT EXISTS cliente("
 					+ "id INT NOT NULL AUTO_INCREMENT, "
 					+ "nombre VARCHAR(500),"
 					+ "email VARCHAR(200),"

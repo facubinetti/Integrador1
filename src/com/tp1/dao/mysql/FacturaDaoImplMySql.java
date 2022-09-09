@@ -21,7 +21,8 @@ public class FacturaDaoImplMySql implements DAOInterface<Factura> {
 	@Override
 	public void crear() {
 		try {
-			String table = "CREATE TABLE factura("
+			String table = "CREATE DATABASE IF NOT EXISTS gp1tpi1,"
+					+ "CREATE TABLE factura("
 					+ "id INT NOT NULL AUTO_INCREMENT, "
 					+ "idCliente int,"
 					+ "PRIMARY KEY(id))";

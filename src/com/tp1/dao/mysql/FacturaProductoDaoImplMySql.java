@@ -21,7 +21,8 @@ public class FacturaProductoDaoImplMySql implements DAOInterface<Factura_Product
 	@Override
 	public void crear() {
 		try {
-			String table = "CREATE TABLE IF NOT EXISTS factura_producto("
+			String table = "CREATE DATABASE IF NOT EXISTS gp1tpi1,"
+					+ "CREATE TABLE IF NOT EXISTS factura_producto("
 					+ "idFactura INT, "
 					+ "idProducto INT, "
 					+ "cantidad INT) ";
