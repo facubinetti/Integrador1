@@ -34,10 +34,7 @@ public class FacturaDaoImplDerby implements DAOInterface<Factura> {
 			String alter = "ALTER TABLE factura "
 					+ "ADD CONSTRAINT FK_factura_cliente "
 					+ "FOREIGN KEY (idCliente) "
-					+ "REFERENCES cliente (id) "
-					+ "NOT DEFERRABLE "
-					+ "INITIALLY IMMEDIATE";
-
+					+ "REFERENCES cliente (id) ";
 			this.ctmp.prepareStatement(alter).execute();
 			return true;
 		} catch (Exception e) {

@@ -62,7 +62,7 @@ public class Controller {
 	 */
 	private void crearRelaciones(){
 		this.clienteDao.crearRelacion();
-		this.facturaDao.crearRelacion();
+		this.productoDao.crearRelacion();
 		this.facturaDao.crearRelacion();
 		this.facturaProductoDao.crearRelacion();
 	}
