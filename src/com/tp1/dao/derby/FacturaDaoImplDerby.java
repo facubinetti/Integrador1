@@ -24,6 +24,22 @@ public class FacturaDaoImplDerby implements DAOInterface<Factura> {
 					+ "idCliente int,"
 					+ "PRIMARY KEY(id))";
 			this.ctmp.prepareStatement(table).execute();
+			this.modificar();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void modificar() {
+		try {
+			String alter = "ALTER TABLE factura "
+					+ "ADD CONSTRAINT FK_factura_cliente "
+					+ "FOREIGN KEY (idCliente) "
+					+ "REFERENCES cliente (id) "
+					+ "NOT DEFERRABLE "
+					+ "INITIALLY IMMEDIATE";
+
+			this.ctmp.prepareStatement(alter).execute();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

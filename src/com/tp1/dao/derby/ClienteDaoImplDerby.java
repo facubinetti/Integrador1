@@ -20,7 +20,7 @@ public class ClienteDaoImplDerby implements DAOInterface<Cliente> {
 			String table = "CREATE TABLE cliente("
 					+ "id INT NOT NULL , "
 					+ "nombre VARCHAR(500),"
-					+ "edad INT,"
+					+ "email VARCHAR(200),"
 					+ "PRIMARY KEY(id))";
 			this.ctmp.prepareStatement(table).execute();
 		} catch (Exception e) {

@@ -6,7 +6,8 @@ import com.tp1.controller.Controller;
 public class Demo {
 	public static void main (String[] args) {
 
-		Controller cp = new Controller(Controller.MYSQL_JDBC);
+//		Controller cp = new Controller(Controller.MYSQL_JDBC);		
+		Controller cp = new Controller(Controller.DERBY_JDBC);
 		
 		cp.crearTablas();
 		
