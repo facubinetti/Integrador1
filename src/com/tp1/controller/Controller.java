@@ -6,12 +6,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.tp1.dao.ClienteDaoImpl;
+import com.tp1.dao.FacturaDaoImpl;
+import com.tp1.dao.FacturaProductoDaoImpl;
+import com.tp1.dao.ProductoDaoImpl;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import com.tp1.factory.DAOFactory;
-import com.tp1.idao.DAOInterface;
 import com.tp1.model.Cliente;
 import com.tp1.model.Factura;
 import com.tp1.model.Factura_Producto;
@@ -27,10 +30,10 @@ import static java.lang.Integer.parseInt;
 public class Controller {
 
 	private ViewCliente vista = new ViewCliente();
-	private DAOInterface<Cliente> clienteDao;
-	private DAOInterface<Factura> facturaDao;
-	private DAOInterface<Factura_Producto> facturaProductoDao;
-	private DAOInterface<Producto> productoDao;
+	private ClienteDaoImpl clienteDao;
+	private FacturaDaoImpl facturaDao;
+	private FacturaProductoDaoImpl facturaProductoDao;
+	private ProductoDaoImpl productoDao;
 	
 	public static final int MYSQL_JDBC = 1;
 	public static final int DERBY_JDBC = 2;
@@ -170,6 +173,7 @@ public class Controller {
 		leerProductos();
 		leerClientes();
 		leerFacturas();
+		leerFacturas_productos();
 	}
 
 	/**
@@ -264,6 +268,42 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * Lee facturas-productos.csv y lo registra en la base de datos
+	 */
+	private void leerFacturas_productos() {
+		try {
+			@SuppressWarnings("deprecation")
+			CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader("./src/com/tp1/csv/facturas-productos.csv"));
+			System.out.println("Gracias por las facturas pero");
+			for(CSVRecord row: parser) {
+//			System.out.println(row.get("idProducto"));
+//			System.out.println(row.get("nombre"));
+//			System.out.println(row.get("valor"));
+
+				int idFactura = parseInt(row.get("idFactura"));
+				int idProducto = parseInt(row.get("idProducto"));
+				int cantidad = parseInt(row.get("cantidad"));
+
+				Factura_Producto p = new Factura_Producto(idFactura,idProducto,cantidad);
+				registrar(p);
+
+			}
+			System.out.println("No te queda nada mas?");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private ArrayList obtenerFactura_ProductoAgrupadosPorId(){
+		return facturaProductoDao.obtenerTodosAgrupadosPorId();
+	}
+
 
 
 	

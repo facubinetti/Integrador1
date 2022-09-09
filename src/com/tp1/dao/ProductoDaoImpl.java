@@ -1,21 +1,19 @@
-package com.tp1.dao.derby;
+package com.tp1.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.tp1.connection.Conexion;
 import com.tp1.idao.DAOInterface;
 import com.tp1.model.Producto;
 
-public class ProductoDaoImplDerby implements DAOInterface<Producto> {
+public class ProductoDaoImpl implements DAOInterface<Producto> {
 	
 	Connection ctmp;
 	
 	//Constructor
-	public ProductoDaoImplDerby(Connection conexion) {
+	public ProductoDaoImpl(Connection conexion) {
 		this.ctmp = conexion;
 	}
 	@Override

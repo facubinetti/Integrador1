@@ -1,18 +1,17 @@
-package com.tp1.dao.derby;
+package com.tp1.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import com.tp1.idao.DAOInterface;
 import com.tp1.model.Factura;
 
-public class FacturaDaoImplDerby implements DAOInterface<Factura> {
+public class FacturaDaoImpl implements DAOInterface<Factura> {
 
 	Connection ctmp;
 	//Constructor
-	public FacturaDaoImplDerby(Connection conexion) {
+	public FacturaDaoImpl(Connection conexion) {
 		this.ctmp = conexion;
 	}
 

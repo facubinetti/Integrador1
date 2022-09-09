@@ -1,17 +1,16 @@
-package com.tp1.dao.derby;
+package com.tp1.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import com.tp1.idao.DAOInterface;
 import com.tp1.model.Cliente;
 
 
-public class ClienteDaoImplDerby implements DAOInterface<Cliente> {
+public class ClienteDaoImpl implements DAOInterface<Cliente> {
 	Connection ctmp;
 
-	public ClienteDaoImplDerby(Connection conexion) {
+	public ClienteDaoImpl(Connection conexion) {
 		this.ctmp = conexion;
 	}
 	@Override

@@ -2,10 +2,10 @@ package com.tp1.factory;
 
 import com.tp1.connection.Conexion;
 import com.tp1.connection.ConexionDerby;
-import com.tp1.dao.derby.ClienteDaoImplDerby;
-import com.tp1.dao.derby.FacturaDaoImplDerby;
-import com.tp1.dao.derby.FacturaProductoDaoImplDerby;
-import com.tp1.dao.derby.ProductoDaoImplDerby;
+import com.tp1.dao.ClienteDaoImpl;
+import com.tp1.dao.FacturaDaoImpl;
+import com.tp1.dao.FacturaProductoDaoImpl;
+import com.tp1.dao.ProductoDaoImpl;
 
 
 public class DerbyDaoFactory extends DAOFactory {
@@ -13,27 +13,27 @@ public class DerbyDaoFactory extends DAOFactory {
 	Conexion conexion = new ConexionDerby();
 
 	@Override
-	public ClienteDaoImplDerby getClienteDAO() {
+	public ClienteDaoImpl getClienteDAO() {
 		// TODO Auto-generated method stub
-		return new ClienteDaoImplDerby(conexion.getConnection());
+		return new ClienteDaoImpl(conexion.getConnection());
 	}
 
 	@Override
-	public FacturaDaoImplDerby getFacturaDAO() {
+	public FacturaDaoImpl getFacturaDAO() {
 		// TODO Auto-generated method stub
-		return new FacturaDaoImplDerby(conexion.getConnection());
+		return new FacturaDaoImpl(conexion.getConnection());
 	}
 
 	@Override
-	public ProductoDaoImplDerby getProductoDAO() {
+	public ProductoDaoImpl getProductoDAO() {
 		// TODO Auto-generated method stub
-		return new ProductoDaoImplDerby(conexion.getConnection());
+		return new ProductoDaoImpl(conexion.getConnection());
 	}
 
 	@Override
-	public FacturaProductoDaoImplDerby getFacturaProductoDAO() {
+	public FacturaProductoDaoImpl getFacturaProductoDAO() {
 		// TODO Auto-generated method stub
-		return new FacturaProductoDaoImplDerby(conexion.getConnection());
+		return new FacturaProductoDaoImpl(conexion.getConnection());
 	}
 
 }

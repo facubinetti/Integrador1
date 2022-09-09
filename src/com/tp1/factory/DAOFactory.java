@@ -1,16 +1,19 @@
 package com.tp1.factory;
 
-import com.tp1.idao.DAOInterface;
+import com.tp1.dao.ClienteDaoImpl;
+import com.tp1.dao.FacturaDaoImpl;
+import com.tp1.dao.FacturaProductoDaoImpl;
+import com.tp1.dao.ProductoDaoImpl;
 
 public abstract class DAOFactory<T> {
 
 	public static final int MYSQL_JDBC = 1;
 	public static final int DERBY_JDBC = 2;
 	
-	public abstract DAOInterface getClienteDAO();
-	public abstract DAOInterface getFacturaDAO();
-	public abstract DAOInterface getProductoDAO();
-	public abstract DAOInterface getFacturaProductoDAO();
+	public abstract ClienteDaoImpl getClienteDAO();
+	public abstract FacturaDaoImpl getFacturaDAO();
+	public abstract ProductoDaoImpl getProductoDAO();
+	public abstract FacturaProductoDaoImpl getFacturaProductoDAO();
 	
 	public static DAOFactory getDAOFactory(int whichFactory) {
 		switch (whichFactory) {

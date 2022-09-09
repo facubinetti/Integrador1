@@ -1,20 +1,18 @@
-package com.tp1.dao.derby;
+package com.tp1.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.tp1.connection.Conexion;
 import com.tp1.idao.DAOInterface;
 import com.tp1.model.Factura_Producto;
 
-public class FacturaProductoDaoImplDerby implements DAOInterface<Factura_Producto> {
+public class FacturaProductoDaoImpl implements DAOInterface<Factura_Producto> {
 
 	Connection ctmp;
 	//Constructor
-	public FacturaProductoDaoImplDerby(Connection conexion) {
+	public FacturaProductoDaoImpl(Connection conexion) {
 		this.ctmp = conexion;
 	}
 	
@@ -81,6 +79,24 @@ public class FacturaProductoDaoImplDerby implements DAOInterface<Factura_Product
 	public ArrayList<Factura_Producto> obtenerTodos() {
 		ArrayList<Factura_Producto> listaFacturas = new ArrayList<>();
 		String select = "SELECT * FROM factura_producto";
+		PreparedStatement ps;
+		try {
+			ps = this.ctmp.prepareStatement(select);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Factura_Producto tmp = new Factura_Producto(rs.getInt(1), rs.getInt(2), rs.getInt(3));
+				listaFacturas.add(tmp);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listaFacturas;
+
+	}
+
+	public ArrayList obtenerTodosAgrupadosPorId() {
+		ArrayList listaFacturas = new ArrayList<>();
+		String select = "SELECT idProducto, cantidad FROM factura_producto fp JOIN producto p ON fp.idProducto = p.id GROUP BY idProducto ";
 		PreparedStatement ps;
 		try {
 			ps = this.ctmp.prepareStatement(select);
