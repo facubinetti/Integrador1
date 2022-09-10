@@ -11,15 +11,21 @@ public class Demo {
 
 //		cp.crearTablas();
 //		cp.leerArchivos();
+//		cp.eliminarTablas();
+
+
 //		cp.listar("Producto");
-		//cp.listar("Cliente");
+//		cp.listar("Cliente");
 //		cp.listar("Factura");
 //		cp.listar("Factura_Producto");
-
+		/**
+		 * Ejercicio 3
+		 */
 //		cp.listarProducto(cp.obtenerProductodeMayorRecaudacion());
+		/**
+		 * Ejercicio 4
+		 */
+//		cp.listarClientesMayorFacturados();
 
-		cp.listarClientesMayorFacturados();
-
-//		cp.eliminarTablas();
 	}
 }
