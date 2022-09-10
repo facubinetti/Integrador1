@@ -139,6 +139,32 @@ public class ClienteDaoImpl implements DAOInterface<Cliente> {
 		return eliminar;
 	}
 
+	public ArrayList<Cliente> obtenerClientesMayorFacturado() {
+		ArrayList<Cliente> listaClientes = new ArrayList<>();
+		String select = "select cl.clienteID,cl.nombre,cl.email,SUM(VALOR) valortotal "
+				+ "from (select C.ID clienteID,C.NOMBRE nombre,C.EMAIL email,SUM(FP.CANTIDAD)*p.valor as valor "
+				+ "from FACTURA_PRODUCTO fp "
+				+ "join PRODUCTO P on P.ID = fp.IDPRODUCTO "
+				+ "join FACTURA F on F.ID = fp.IDFACTURA "
+				+ "join CLIENTE C on C.ID = F.IDCLIENTE "
+				+ "group by C.ID, C.NOMBRE, C.EMAIL,p.VALOR) cl "
+				+ "join CLIENTE C on cl.clienteID = C.ID "
+				+ "group by cl.clienteID, cl.nombre, cl.email "
+				+ "order by valortotal DESC";
+		PreparedStatement ps;
+		try {
+			ps = this.ctmp.prepareStatement(select);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Cliente tmp = new Cliente(rs.getInt(1), rs.getString(2), rs.getString(3));
+				listaClientes.add(tmp);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return listaClientes;
+	}
 	
 	
 

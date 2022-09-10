@@ -35,6 +35,10 @@ public class ViewCliente {
 			System.out.println(p);
 		}
 	}
+
+	public void listarProducto(Producto p){
+		System.out.println(p);
+	}
 	
 	
 }

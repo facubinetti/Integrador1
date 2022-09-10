@@ -300,8 +300,16 @@ public class Controller {
 		}
 	}
 
-	private ArrayList obtenerFactura_ProductoAgrupadosPorId(){
-		return facturaProductoDao.obtenerTodosAgrupadosPorId();
+	public Producto obtenerProductodeMayorRecaudacion(){
+		return productoDao.getById(facturaProductoDao.obtenerMayorRecaudador());
+	}
+
+	public void listarProducto (Producto p){
+		vista.listarProducto(p);
+	}
+
+	public void listarClientesMayorFacturados(){
+		vista.listarClientes(clienteDao.obtenerClientesMayorFacturado());
 	}
 
 

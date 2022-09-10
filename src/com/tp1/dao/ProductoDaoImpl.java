@@ -75,6 +75,7 @@ public class ProductoDaoImpl implements DAOInterface<Producto> {
 		Producto tmp = null;
 		try {
 			PreparedStatement ps = this.ctmp.prepareStatement(sql);
+			ps.setInt(1,id);
 			ResultSet rs = ps.executeQuery();
 
 			while(rs.next()) {

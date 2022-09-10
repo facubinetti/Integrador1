@@ -1,5 +1,6 @@
 package com.tp1.dao;
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,6 +8,9 @@ import java.util.ArrayList;
 
 import com.tp1.idao.DAOInterface;
 import com.tp1.model.Factura_Producto;
+import com.tp1.model.Producto;
+import netscape.javascript.JSException;
+import netscape.javascript.JSObject;
 
 public class FacturaProductoDaoImpl implements DAOInterface<Factura_Producto> {
 
@@ -94,25 +98,28 @@ public class FacturaProductoDaoImpl implements DAOInterface<Factura_Producto> {
 
 	}
 
-	public ArrayList obtenerTodosAgrupadosPorId() {
-		ArrayList listaFacturas = new ArrayList<>();
-		String select = "SELECT fp.idProducto,p.NOMBRE, SUM(fp.CANTIDAD) cantidadtotal,p.VALOR,SUM(fp.CANTIDAD)*p.valor as Cuenta\n" +
-				"FROM factura_producto fp " +
-				"JOIN producto p ON fp.idProducto = p.id " +
-				"GROUP BY fp.idProducto,p.nombre,p.valor\n" +
-				"order by Cuenta DESC";
+	public int obtenerMayorRecaudador() {
+//		String respuesta = "";
+		int idproducto = 0;
+		String select = "SELECT fp.idProducto,SUM(fp.CANTIDAD)*p.valor as Recaudacion "
+				+ "FROM factura_producto fp "
+				+ "JOIN producto p ON fp.idProducto = p.id "
+				+ "GROUP BY fp.idProducto,p.valor "
+				+ "ORDER BY Recaudacion DESC "
+				+ "FETCH FIRST 1 ROWS ONLY";
 		PreparedStatement ps;
 		try {
 			ps = this.ctmp.prepareStatement(select);
+
 			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				Factura_Producto tmp = new Factura_Producto(rs.getInt(1), rs.getInt(2), rs.getInt(3));
-				listaFacturas.add(tmp);
+
+			while (rs.next()){
+				idproducto = rs.getInt(1);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return listaFacturas;
+		return idproducto;
 
 	}
 
@@ -175,6 +182,7 @@ public class FacturaProductoDaoImpl implements DAOInterface<Factura_Producto> {
 	
 	public boolean dropTable(){
 		String dropTable = "DROP TABLE factura_producto";
+
 		boolean drop = false;
 		try {
 			this.ctmp.prepareStatement(dropTable).execute();
@@ -185,4 +193,5 @@ public class FacturaProductoDaoImpl implements DAOInterface<Factura_Producto> {
 		}
 		return drop;
 	}
+
 }
