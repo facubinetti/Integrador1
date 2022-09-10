@@ -10,11 +10,15 @@ import com.tp1.model.Factura;
 public class FacturaDaoImpl implements DAOInterface<Factura> {
 
 	Connection ctmp;
-	//Constructor
+
+	//constructor
 	public FacturaDaoImpl(Connection conexion) {
 		this.ctmp = conexion;
 	}
 
+	/**
+	 * @see DAOInterface#crear()
+	 */
 	@Override
 	public void crear() {
 		try {
@@ -28,6 +32,10 @@ public class FacturaDaoImpl implements DAOInterface<Factura> {
 		}
 	}
 	
+	/**
+	 * @see DAOInterface#crearRelacion()
+	 */
+	@Override
 	public boolean crearRelacion() {
 		try {
 			String alter = "ALTER TABLE factura "
@@ -42,7 +50,10 @@ public class FacturaDaoImpl implements DAOInterface<Factura> {
 		return false;
 	}
 
-
+	/**
+	 * @see DAOInterface#dropTable()
+	 */
+	@Override
 	public boolean dropTable(){
 		String dropTable = "DROP TABLE factura";
 		boolean drop = false;
@@ -56,6 +67,9 @@ public class FacturaDaoImpl implements DAOInterface<Factura> {
 		return drop;
 	}
 	
+	/**
+	 * @see DAOInterface#eliminarObj(Object)
+	 */
 	@Override
 	public boolean eliminarObj(Factura factura) {
 		String delete = "DELETE FROM factura WHERE id = ?";
@@ -72,6 +86,9 @@ public class FacturaDaoImpl implements DAOInterface<Factura> {
 		return eliminar;
 	}
 
+	/**
+	 * @see DAOInterface#registrarObj(Object)
+	 */
 	@Override
 	public boolean registrarObj(Factura factura) {
 		String insert = "INSERT INTO factura (id, idCliente) VALUES(?, ?)";
@@ -91,6 +108,9 @@ public class FacturaDaoImpl implements DAOInterface<Factura> {
 		return registrar;
 	}
 
+	/**
+	 * @see DAOInterface#obtenerTodos()
+	 */
 	@Override
 	public ArrayList<Factura> obtenerTodos() {
 		ArrayList<Factura> listaFacturas = new ArrayList<>();
@@ -109,6 +129,9 @@ public class FacturaDaoImpl implements DAOInterface<Factura> {
 		return listaFacturas;
 	}
 
+	/**
+	 * @see DAOInterface#getById(int)
+	 */
 	@Override
 	public Factura getById(int id) {
 		String sql = "SELECT * FROM factura WHERE id ="+id;
@@ -127,13 +150,13 @@ public class FacturaDaoImpl implements DAOInterface<Factura> {
 		return tmp;
 	}
 
+	/**
+	 * @see DAOInterface#actualizarObj(Object)
+	 */
 	@Override
 	public boolean actualizarObj(Factura factura) {
 		
 		return false;
 	}
-
-
-	
 	
 }

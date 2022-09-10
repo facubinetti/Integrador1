@@ -15,26 +15,32 @@ import netscape.javascript.JSObject;
 public class FacturaProductoDaoImpl implements DAOInterface<Factura_Producto> {
 
 	Connection ctmp;
+	
 	//Constructor
 	public FacturaProductoDaoImpl(Connection conexion) {
 		this.ctmp = conexion;
 	}
 	
+	/**
+	 * @see DAOInterface#crear()
+	 */
+	@Override
 	public void crear() {
 		try {
 			String table = "CREATE TABLE factura_producto("
 					+ "idFactura INT,"
 					+ "idProducto INT,"
 					+ "cantidad INT)";
-//					+ "ALTER TABLE `factura_producto`"
-//					+ "ADD KEY `idFactura` (`idFactura`,`idProducto`),"
-//					+ "ADD KEY `idProducto` (`idProducto`)";
 			this.ctmp.prepareStatement(table).execute();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
+	
+	/**
+	 * @see DAOInterface#crearRelacion()
+	 */
+	@Override
 	public boolean crearRelacion() {
 		try {
 			String alter = "ALTER TABLE factura_producto "
@@ -55,6 +61,9 @@ public class FacturaProductoDaoImpl implements DAOInterface<Factura_Producto> {
 		return false;
 	}
 
+	/**
+	 * @see DAOInterface#registrarObj(Object)
+	 */
 	@Override
 	public boolean registrarObj(Factura_Producto obj) {
 		String insert = "INSERT INTO factura_producto (idFactura, idProducto, cantidad) VALUES(?, ?, ?)";
@@ -79,6 +88,9 @@ public class FacturaProductoDaoImpl implements DAOInterface<Factura_Producto> {
 
 	}
 
+	/**
+	 * @see DAOInterface#obtenerTodos()
+	 */
 	@Override
 	public ArrayList<Factura_Producto> obtenerTodos() {
 		ArrayList<Factura_Producto> listaFacturas = new ArrayList<>();
@@ -98,6 +110,10 @@ public class FacturaProductoDaoImpl implements DAOInterface<Factura_Producto> {
 
 	}
 
+	/**
+	 * Obtiene el producto que más recaudó
+	 * @return identificador del producto
+	 */
 	public int obtenerMayorRecaudador() {
 //		String respuesta = "";
 		int idproducto = 0;
@@ -123,6 +139,9 @@ public class FacturaProductoDaoImpl implements DAOInterface<Factura_Producto> {
 
 	}
 
+	/**
+	 * @see DAOInterface#getById(int)
+	 */
 	@Override
 	public Factura_Producto getById(int id) {
 		String sql = "SELECT * FROM factura_producto WHERE id ="+id;
@@ -140,6 +159,9 @@ public class FacturaProductoDaoImpl implements DAOInterface<Factura_Producto> {
 
 	}
 
+	/**
+	 * @see DAOInterface#actualizarObj(Object)
+	 */
 	@Override
 	public boolean actualizarObj(Factura_Producto obj) {
 		String update = "UPDATE factura_producto SET cantidad=(?) WHERE idFactura = (?) AND idProducto = (?)";
@@ -160,6 +182,9 @@ public class FacturaProductoDaoImpl implements DAOInterface<Factura_Producto> {
 
 	}
 
+	/**
+	 * @see DAOInterface#eliminarObj(Object)
+	 */
 	@Override
 	public boolean eliminarObj(Factura_Producto obj) {
 		String delete = "DELETE FROM factura_producto WHERE idFactura = (?) AND idProducto = (?)";
@@ -178,8 +203,10 @@ public class FacturaProductoDaoImpl implements DAOInterface<Factura_Producto> {
 
 	}
 
-
-	
+	/**
+	 * @see DAOInterface#dropTable()
+	 */
+	@Override
 	public boolean dropTable(){
 		String dropTable = "DROP TABLE factura_producto";
 

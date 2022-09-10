@@ -10,9 +10,14 @@ import com.tp1.model.Cliente;
 public class ClienteDaoImpl implements DAOInterface<Cliente> {
 	Connection ctmp;
 
+	//constructor
 	public ClienteDaoImpl(Connection conexion) {
 		this.ctmp = conexion;
 	}
+	
+	/**
+	 * @see DAOInterface#crear()
+	 */
 	@Override
 	public void crear(){
 		try {
@@ -27,6 +32,10 @@ public class ClienteDaoImpl implements DAOInterface<Cliente> {
 		}
 	}
 	
+	/**
+	 * @see DAOInterface#dropTable()
+	 */
+	@Override
 	public boolean dropTable(){
 		String dropTable = "DROP TABLE cliente";
 		boolean drop = false;
@@ -39,12 +48,18 @@ public class ClienteDaoImpl implements DAOInterface<Cliente> {
 		}
 		return drop;
 	}
-
+	
+	/**
+	 * @see DAOInterface#crearRelacion()
+	 */
 	@Override
 	public boolean crearRelacion() {
 		return false;
 	}
 
+	/**
+	 * @see DAOInterface#registrarObj(Object)
+	 */
 	@Override
 	public boolean registrarObj (Cliente cliente) {
 		String insert = "INSERT INTO cliente (id, nombre, email) VALUES(?, ?, ?)";
@@ -65,6 +80,9 @@ public class ClienteDaoImpl implements DAOInterface<Cliente> {
 		return registrar;
 	}
 	
+	/**
+	 * @see DAOInterface#obtenerTodos()
+	 */
 	@Override
 	public ArrayList<Cliente> obtenerTodos() {
 		ArrayList<Cliente> listaClientes = new ArrayList<>();
@@ -78,12 +96,14 @@ public class ClienteDaoImpl implements DAOInterface<Cliente> {
 				listaClientes.add(tmp);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return listaClientes;
 	}
 	
+	/**
+	 * @see DAOInterface#getById(int)
+	 */
 	@Override
 	public Cliente getById(int id) {
 		String sql = "SELECT * FROM cliente WHERE id ="+id;
@@ -94,9 +114,6 @@ public class ClienteDaoImpl implements DAOInterface<Cliente> {
 			while(rs.next()){
 				tmp = new Cliente(rs.getInt(1), rs.getString(2), rs.getString(3));
 			}
-			//tmp.setId(rs.getInt(1));
-			//tmp.setNombre(rs.getString(2));
-			//tmp.setEmail(rs.getString(3));
 		}
 		catch (Exception e) {
 			System.out.println("Error: Clase ClienteDaoImple, metodo obtener por id");
@@ -105,6 +122,9 @@ public class ClienteDaoImpl implements DAOInterface<Cliente> {
 		return tmp;
 	}
 
+	/**
+	 * @see DAOInterface#actualizarObj(Object)
+	 */
 	@Override
 	public boolean actualizarObj(Cliente cliente) {
 		String update = "UPDATE cliente SET nombre=(?) , email=(?) WHERE id = (?)";
@@ -123,6 +143,9 @@ public class ClienteDaoImpl implements DAOInterface<Cliente> {
 		return actualizar;
 	}
 
+	/**
+	 * @see DAOInterface#eliminarObj(Object)
+	 */
 	@Override
 	public boolean eliminarObj(Cliente cliente) {
 		String delete = "DELETE FROM cliente WHERE id = ?";
@@ -138,7 +161,11 @@ public class ClienteDaoImpl implements DAOInterface<Cliente> {
 		}
 		return eliminar;
 	}
-
+	
+	/**
+	 * Obtiene los clientes segun valor de facturacion
+	 * @return lista de clientes ordenado descendientemente segun valor de facturacion
+	 */
 	public ArrayList<Cliente> obtenerClientesMayorFacturado() {
 		ArrayList<Cliente> listaClientes = new ArrayList<>();
 		String select = "select cl.clienteID,cl.nombre,cl.email,SUM(VALOR) valortotal "
@@ -160,12 +187,9 @@ public class ClienteDaoImpl implements DAOInterface<Cliente> {
 				listaClientes.add(tmp);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return listaClientes;
 	}
 	
-	
-
 }

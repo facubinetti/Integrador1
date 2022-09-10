@@ -248,9 +248,7 @@ public class Controller {
 			CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader("./src/com/tp1/csv/facturas.csv"));
 			System.out.println("Gracias por las facturas pero");
 			for(CSVRecord row: parser) {
-//			System.out.println(row.get("idProducto"));
-//			System.out.println(row.get("nombre"));
-//			System.out.println(row.get("valor"));
+
 
 			int idFactura = parseInt(row.get("idFactura"));
 			int idCliente = parseInt(row.get("idCliente"));
@@ -311,14 +309,5 @@ public class Controller {
 	public void listarClientesMayorFacturados(){
 		vista.listarClientes(clienteDao.obtenerClientesMayorFacturado());
 	}
-
-
-
-	
-	
-	
-	
-	
-	
 	
 }

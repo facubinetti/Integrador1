@@ -16,6 +16,10 @@ public class ProductoDaoImpl implements DAOInterface<Producto> {
 	public ProductoDaoImpl(Connection conexion) {
 		this.ctmp = conexion;
 	}
+
+	/**
+	 * @see DAOInterface#crear()
+	 */
 	@Override
 	public void crear() {
 		try {
@@ -30,6 +34,9 @@ public class ProductoDaoImpl implements DAOInterface<Producto> {
 		}
 	}
 
+	/**
+	 * @see DAOInterface#registrarObj(Object)
+	 */
 	@Override
 	public boolean registrarObj(Producto obj) {
 		String insert = "INSERT INTO producto (id, nombre, valor) VALUES(?, ?, ?)";
@@ -50,6 +57,9 @@ public class ProductoDaoImpl implements DAOInterface<Producto> {
 		return registrar;
 	}
 
+	/**
+	 * @see DAOInterface#obtenerTodos()
+	 */
 	@Override
 	public ArrayList<Producto> obtenerTodos() {
 		ArrayList<Producto> listaProductos = new ArrayList<>();
@@ -69,6 +79,9 @@ public class ProductoDaoImpl implements DAOInterface<Producto> {
 		return listaProductos;
 	}
 
+	/**
+	 * @see DAOInterface#getById(int)
+	 */
 	@Override
 	public Producto getById(int id) {
 		String sql = "SELECT * FROM producto WHERE id = ?";
@@ -81,11 +94,6 @@ public class ProductoDaoImpl implements DAOInterface<Producto> {
 			while(rs.next()) {
 				tmp = new Producto(rs.getInt(1), rs.getString(2), rs.getFloat(3));
 			}
-			
-
-			//tmp.setId(rs.getInt(1));
-			//tmp.setNombre(rs.getString(2));
-			//tmp.setValor(rs.getString(3));
 		}
 		catch (Exception e) {
 			System.out.println("Error: Clase ProductoDaoImple, metodo obtener por id");
@@ -94,6 +102,9 @@ public class ProductoDaoImpl implements DAOInterface<Producto> {
 		return tmp;
 	}
 
+	/**
+	 * @see DAOInterface#actualizarObj(Object)
+	 */
 	@Override
 	public boolean actualizarObj(Producto obj) {
 
@@ -116,6 +127,9 @@ public class ProductoDaoImpl implements DAOInterface<Producto> {
 		return actualizar;
 	}
 
+	/**
+	 * @see DAOInterface#eliminarObj(Object)
+	 */
 	@Override
 	public boolean eliminarObj(Producto obj) {
 		String delete = "DELETE FROM producto WHERE id = ?";
@@ -134,7 +148,10 @@ public class ProductoDaoImpl implements DAOInterface<Producto> {
 		return eliminar;
 	}
 
-	
+	/**
+	 * @see DAOInterface#dropTable()
+	 */
+	@Override
 	public boolean dropTable(){
 		String dropTable = "DROP TABLE producto";
 		boolean drop = false;
@@ -148,6 +165,9 @@ public class ProductoDaoImpl implements DAOInterface<Producto> {
 		return drop;
 	}
 
+	/**
+	 * @see DAOInterface#crearRelacion()
+	 */
 	@Override
 	public boolean crearRelacion() {
 		return false;
