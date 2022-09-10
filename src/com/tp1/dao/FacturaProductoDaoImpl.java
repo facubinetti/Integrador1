@@ -96,7 +96,11 @@ public class FacturaProductoDaoImpl implements DAOInterface<Factura_Producto> {
 
 	public ArrayList obtenerTodosAgrupadosPorId() {
 		ArrayList listaFacturas = new ArrayList<>();
-		String select = "SELECT idProducto, cantidad FROM factura_producto fp JOIN producto p ON fp.idProducto = p.id GROUP BY idProducto ";
+		String select = "SELECT fp.idProducto,p.NOMBRE, SUM(fp.CANTIDAD) cantidadtotal,p.VALOR,SUM(fp.CANTIDAD)*p.valor as Cuenta\n" +
+				"FROM factura_producto fp " +
+				"JOIN producto p ON fp.idProducto = p.id " +
+				"GROUP BY fp.idProducto,p.nombre,p.valor\n" +
+				"order by Cuenta DESC";
 		PreparedStatement ps;
 		try {
 			ps = this.ctmp.prepareStatement(select);

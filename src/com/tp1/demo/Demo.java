@@ -8,15 +8,11 @@ public class Demo {
 
 //		Controller cp = new Controller(Controller.MYSQL_JDBC);		
 		Controller cp = new Controller(Controller.DERBY_JDBC);
-		
-		cp.crearTablas();
-		
-		cp.leerArchivos();
-		
+
+//		cp.crearTablas();
+//		cp.leerArchivos();
 //		cp.listar("Producto");
-
 		//cp.listar("Cliente");
-
 //		cp.listar("Factura");
 		cp.listar("Factura_Producto");
 		

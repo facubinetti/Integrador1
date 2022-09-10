@@ -74,10 +74,10 @@ public class Controller {
 	 * Elimina todas las tablas de la base de datos
 	 */
 	public void eliminarTablas() {
-		clienteDao.dropTable();
-		productoDao.dropTable();
-		facturaDao.dropTable();
 		facturaProductoDao.dropTable();
+		facturaDao.dropTable();
+		productoDao.dropTable();
+		clienteDao.dropTable();
 	}
 
 	/**
